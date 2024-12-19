@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public static class BulletManager
@@ -17,7 +18,7 @@ public static class BulletManager
 
     public static void UnInit()
     {
-        foreach(var kPair in bulletObjectDic)
+        foreach (var kPair in bulletObjectDic)
         {
             var bullet = kPair.Value;
             BulletPool.Release(bullet);
@@ -40,11 +41,11 @@ public static class BulletManager
     {
         for (int i = 0; i < parabolaCurveUpdateDatas.Count; i++)
         {
-            var preData = parabolaCurveUpdateDatas[i];
-            var newData = UpdateData(parabolaCurveUpdateDatas[i], Time.fixedDeltaTime);
-            parabolaCurveUpdateDatas[i] = newData;
+            var curData = parabolaCurveUpdateDatas[i];
+            var nextData = UpdateData(parabolaCurveUpdateDatas[i], Time.fixedDeltaTime);
+            parabolaCurveUpdateDatas[i] = nextData;
 
-            UpdateObject(preData, newData);
+            UpdateObject(curData, nextData);
         }
     }
 
@@ -122,23 +123,52 @@ public static class BulletManager
         return newData;
     }
 
-    private static void UpdateObject(ParabolaCurveUpdateData preData, ParabolaCurveUpdateData newData)
+    private static void UpdateObject(ParabolaCurveUpdateData curData, ParabolaCurveUpdateData nextData)
     {
         // 判空
-        if (!bulletObjectDic.TryGetValue(newData.uid, out var obj))
+        if (!bulletObjectDic.TryGetValue(nextData.uid, out var obj))
             return;
 
-        //if (data.timer <= 0)
-        if (IsBounding(preData, newData))
+        if (nextData.timer <= 0)
         {
-            Remove(newData.uid);
+            Remove(nextData.uid);
             return;
         }
 
-        obj.transform.position = newData.point;
-        if (newData.followRotate)
+        if (IsBounding(curData, nextData, out var hitInfo))
         {
-            var direction = newData.velocity;
+            obj.transform.position = hitInfo.point;
+            if (nextData.followRotate)
+            {
+                var direction = nextData.velocity;
+                obj.transform.rotation = Quaternion.LookRotation(direction, obj.transform.up);
+            }
+
+            var layer = hitInfo.collider.gameObject.layer;
+            switch (layer)
+            {
+                case Layer.Enemy:
+                    {
+                        var damageInfo = new DamageInfo()
+                        {
+                            damage = 10,
+                            attacker = null,
+                            receiver = hitInfo.collider.GetComponentInParent<BeUnit>(),
+                            hitPoint = hitInfo.point
+                        };
+                        DamageManager.Add(damageInfo);
+                    }
+                    break;
+            }
+
+            Remove(nextData.uid);
+            return;
+        }
+
+        obj.transform.position = nextData.point;
+        if (nextData.followRotate)
+        {
+            var direction = nextData.velocity;
             obj.transform.rotation = Quaternion.LookRotation(direction, obj.transform.up);
         }
     }
@@ -157,16 +187,11 @@ public static class BulletManager
         BulletPool.Release(bullet);
     }
 
-    private static bool IsBounding(ParabolaCurveUpdateData preData, ParabolaCurveUpdateData newData)
+    private static bool IsBounding(ParabolaCurveUpdateData curData, ParabolaCurveUpdateData nextData, out RaycastHit hitInfo)
     {
         // 计算出射线方向
-        var rayDirection = newData.point - preData.point;
+        var rayDirection = nextData.point - curData.point;
 
-        if (Physics.Raycast(preData.point, rayDirection, out var hitinfo, rayDirection.magnitude))
-        {
-            return true;
-        }
-
-        return false;
+        return Physics.Raycast(curData.point, rayDirection, out hitInfo, rayDirection.magnitude);
     }
 }

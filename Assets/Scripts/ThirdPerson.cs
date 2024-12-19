@@ -61,6 +61,12 @@ public class ThirdPerson : MonoBehaviour
 
     private void Move()
     {
-        transform.position = player.transform.position + new Vector3(0, 3, 0) - transform.forward * cameraDisChara;
+        //transform.position = player.transform.position + new Vector3(2f, 3.3f, 0) - transform.forward * cameraDisChara;
+
+        // 定义相机相对于角色的偏移
+        Vector3 relativeOffset = new Vector3(2f, 3f, -cameraDisChara); // 左下方（相机坐标系）
+        // 通过相机当前的旋转，将相对位置偏移（定义在相机的本地坐标系中）转换到世界坐标系
+        Vector3 worldOffset = transform.rotation * relativeOffset;
+        transform.position = player.transform.position + worldOffset;
     }
 }
