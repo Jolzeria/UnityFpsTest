@@ -8,7 +8,7 @@ public class LogicFrame : MonoBehaviour
     private void Awake()
     {
         EventHandler.Init();
-        BulletManager.Init();
+        ParabolaCurveManager.Init();
         BulletPool.Init(transform.Find("Pool"));
         DamageManager.Init();
     }
@@ -20,19 +20,19 @@ public class LogicFrame : MonoBehaviour
     private void OnDestroy()
     {
         EventHandler.UnInit();
-        BulletManager.UnInit();
+        ParabolaCurveManager.UnInit();
         BulletPool.UnInit();
         DamageManager.UnInit();
     }
 
     private void Update()
     {
-        BulletManager.Update();
+        ParabolaCurveManager.Update();
         DamageManager.Update();
     }
 
     private void FixedUpdate()
     {
-        BulletManager.FixedUpdate();
+        ParabolaCurveManager.FixedUpdate();
     }
 }

@@ -24,11 +24,5 @@
 A*算法
 深度学习
 
-把基础属性写成类，有一个Enum作为索引，然后类中定义这些属性
-BaseAttr abstract
-	curAmmu弹药 maxAmmu cueHp血量 maxHp 用enum
-CharacterAttr
-EnemyAttr
-调用这两个方法可以添加/修改属性和获取属性
-BeUnit.AddAttrValue();
-BeUnit.GetAttrValue();
+
+玩家发出子弹实体（挂载EntityUnit脚本，赋值OriginalCreator），实体监听命中事件，当触发命中事件时，通知DamageManager计算伤害

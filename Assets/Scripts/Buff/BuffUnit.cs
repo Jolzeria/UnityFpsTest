@@ -1,6 +1,6 @@
 using System;
 
-public static class Buff
+public static class BuffUnit
 {
     [Flags]
     public enum BuffFlag
