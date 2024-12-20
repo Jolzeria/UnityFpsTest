@@ -80,6 +80,131 @@ public static class EventHandler
 
     }
 
+    public static void RegisterEvent<T1, T2>(BeUnit beUnit, string eventName, Action<T1, T2> action)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
+        {
+            Debug.LogError("Invalid parameters for RegisterEvent.");
+            return;
+        }
+
+        if (!events.TryGetValue(beUnit, out var unitEvents))
+        {
+            unitEvents = new Dictionary<string, Delegate>();
+            events[beUnit] = unitEvents;
+        }
+
+        if (unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            unitEvents[eventName] = Delegate.Combine(existingDelegate, action);
+        }
+        else
+        {
+            unitEvents[eventName] = action;
+        }
+
+    }
+
+    public static void RegisterEvent<T1, T2, T3>(BeUnit beUnit, string eventName, Action<T1, T2, T3> action)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
+        {
+            Debug.LogError("Invalid parameters for RegisterEvent.");
+            return;
+        }
+
+        if (!events.TryGetValue(beUnit, out var unitEvents))
+        {
+            unitEvents = new Dictionary<string, Delegate>();
+            events[beUnit] = unitEvents;
+        }
+
+        if (unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            unitEvents[eventName] = Delegate.Combine(existingDelegate, action);
+        }
+        else
+        {
+            unitEvents[eventName] = action;
+        }
+
+    }
+
+    public static void RegisterEvent<T1, T2, T3, T4>(BeUnit beUnit, string eventName, Action<T1, T2, T3, T4> action)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
+        {
+            Debug.LogError("Invalid parameters for RegisterEvent.");
+            return;
+        }
+
+        if (!events.TryGetValue(beUnit, out var unitEvents))
+        {
+            unitEvents = new Dictionary<string, Delegate>();
+            events[beUnit] = unitEvents;
+        }
+
+        if (unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            unitEvents[eventName] = Delegate.Combine(existingDelegate, action);
+        }
+        else
+        {
+            unitEvents[eventName] = action;
+        }
+
+    }
+
+    public static void RegisterEvent<T1, T2, T3, T4, T5>(BeUnit beUnit, string eventName, Action<T1, T2, T3, T4, T5> action)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
+        {
+            Debug.LogError("Invalid parameters for RegisterEvent.");
+            return;
+        }
+
+        if (!events.TryGetValue(beUnit, out var unitEvents))
+        {
+            unitEvents = new Dictionary<string, Delegate>();
+            events[beUnit] = unitEvents;
+        }
+
+        if (unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            unitEvents[eventName] = Delegate.Combine(existingDelegate, action);
+        }
+        else
+        {
+            unitEvents[eventName] = action;
+        }
+
+    }
+
+    public static void RegisterEvent<T1, T2, T3, T4, T5, T6>(BeUnit beUnit, string eventName, Action<T1, T2, T3, T4, T5, T6> action)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
+        {
+            Debug.LogError("Invalid parameters for RegisterEvent.");
+            return;
+        }
+
+        if (!events.TryGetValue(beUnit, out var unitEvents))
+        {
+            unitEvents = new Dictionary<string, Delegate>();
+            events[beUnit] = unitEvents;
+        }
+
+        if (unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            unitEvents[eventName] = Delegate.Combine(existingDelegate, action);
+        }
+        else
+        {
+            unitEvents[eventName] = action;
+        }
+
+    }
+
 
 
     public static void UnRegisterEvent(BeUnit beUnit, string eventName, Action action)
@@ -133,6 +258,138 @@ public static class EventHandler
             }
         }
     }
+
+    public static void UnRegisterEvent<T1, T2>(BeUnit beUnit, string eventName, Action<T1, T2> action)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
+        {
+            Debug.LogError("Invalid parameters for UnRegisterEvent.");
+            return;
+        }
+
+        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            var newDelegate = Delegate.Remove(existingDelegate, action);
+
+            if (newDelegate == null)
+            {
+                unitEvents.Remove(eventName);
+
+                if (unitEvents.Count == 0)
+                    events.Remove(beUnit);
+            }
+            else
+            {
+                unitEvents[eventName] = newDelegate;
+            }
+        }
+    }
+
+    public static void UnRegisterEvent<T1, T2, T3>(BeUnit beUnit, string eventName, Action<T1, T2, T3> action)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
+        {
+            Debug.LogError("Invalid parameters for UnRegisterEvent.");
+            return;
+        }
+
+        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            var newDelegate = Delegate.Remove(existingDelegate, action);
+
+            if (newDelegate == null)
+            {
+                unitEvents.Remove(eventName);
+
+                if (unitEvents.Count == 0)
+                    events.Remove(beUnit);
+            }
+            else
+            {
+                unitEvents[eventName] = newDelegate;
+            }
+        }
+    }
+
+    public static void UnRegisterEvent<T1, T2, T3, T4>(BeUnit beUnit, string eventName, Action<T1, T2, T3, T4> action)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
+        {
+            Debug.LogError("Invalid parameters for UnRegisterEvent.");
+            return;
+        }
+
+        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            var newDelegate = Delegate.Remove(existingDelegate, action);
+
+            if (newDelegate == null)
+            {
+                unitEvents.Remove(eventName);
+
+                if (unitEvents.Count == 0)
+                    events.Remove(beUnit);
+            }
+            else
+            {
+                unitEvents[eventName] = newDelegate;
+            }
+        }
+    }
+
+    public static void UnRegisterEvent<T1, T2, T3, T4, T5>(BeUnit beUnit, string eventName, Action<T1, T2, T3, T4, T5> action)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
+        {
+            Debug.LogError("Invalid parameters for UnRegisterEvent.");
+            return;
+        }
+
+        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            var newDelegate = Delegate.Remove(existingDelegate, action);
+
+            if (newDelegate == null)
+            {
+                unitEvents.Remove(eventName);
+
+                if (unitEvents.Count == 0)
+                    events.Remove(beUnit);
+            }
+            else
+            {
+                unitEvents[eventName] = newDelegate;
+            }
+        }
+    }
+
+    public static void UnRegisterEvent<T1, T2, T3, T4, T5, T6>(BeUnit beUnit, string eventName, Action<T1, T2, T3, T4, T5, T6> action)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
+        {
+            Debug.LogError("Invalid parameters for UnRegisterEvent.");
+            return;
+        }
+
+        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            var newDelegate = Delegate.Remove(existingDelegate, action);
+
+            if (newDelegate == null)
+            {
+                unitEvents.Remove(eventName);
+
+                if (unitEvents.Count == 0)
+                    events.Remove(beUnit);
+            }
+            else
+            {
+                unitEvents[eventName] = newDelegate;
+            }
+        }
+    }
+
+
 
     public static void ExecuteEvent(BeUnit beUnit, string eventName)
     {
@@ -197,6 +454,106 @@ public static class EventHandler
             if (existingDelegate is Action<T1, T2> action)
             {
                 action.Invoke(arg1, arg2);
+            }
+            else
+            {
+                Debug.LogError($"Event '{eventName}' parameter type mismatch for {beUnit.name}.");
+            }
+        }
+        else
+        {
+            Debug.LogError($"Event '{eventName}' not found for {beUnit.name}.");
+        }
+    }
+
+    public static void ExecuteEvent<T1, T2, T3>(BeUnit beUnit, string eventName, T1 arg1, T2 arg2, T3 arg3)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName))
+        {
+            Debug.LogError("Invalid parameters for ExecuteEvent.");
+            return;
+        }
+
+        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            if (existingDelegate is Action<T1, T2, T3> action)
+            {
+                action.Invoke(arg1, arg2, arg3);
+            }
+            else
+            {
+                Debug.LogError($"Event '{eventName}' parameter type mismatch for {beUnit.name}.");
+            }
+        }
+        else
+        {
+            Debug.LogError($"Event '{eventName}' not found for {beUnit.name}.");
+        }
+    }
+
+    public static void ExecuteEvent<T1, T2, T3, T4>(BeUnit beUnit, string eventName, T1 arg1, T2 arg2, T3 arg3, T4 arg4)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName))
+        {
+            Debug.LogError("Invalid parameters for ExecuteEvent.");
+            return;
+        }
+
+        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            if (existingDelegate is Action<T1, T2, T3, T4> action)
+            {
+                action.Invoke(arg1, arg2, arg3, arg4);
+            }
+            else
+            {
+                Debug.LogError($"Event '{eventName}' parameter type mismatch for {beUnit.name}.");
+            }
+        }
+        else
+        {
+            Debug.LogError($"Event '{eventName}' not found for {beUnit.name}.");
+        }
+    }
+
+    public static void ExecuteEvent<T1, T2, T3, T4, T5>(BeUnit beUnit, string eventName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName))
+        {
+            Debug.LogError("Invalid parameters for ExecuteEvent.");
+            return;
+        }
+
+        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            if (existingDelegate is Action<T1, T2, T3, T4, T5> action)
+            {
+                action.Invoke(arg1, arg2, arg3, arg4, arg5);
+            }
+            else
+            {
+                Debug.LogError($"Event '{eventName}' parameter type mismatch for {beUnit.name}.");
+            }
+        }
+        else
+        {
+            Debug.LogError($"Event '{eventName}' not found for {beUnit.name}.");
+        }
+    }
+
+    public static void ExecuteEvent<T1, T2, T3, T4, T5, T6>(BeUnit beUnit, string eventName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+    {
+        if (beUnit == null || string.IsNullOrEmpty(eventName))
+        {
+            Debug.LogError("Invalid parameters for ExecuteEvent.");
+            return;
+        }
+
+        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        {
+            if (existingDelegate is Action<T1, T2, T3, T4, T5, T6> action)
+            {
+                action.Invoke(arg1, arg2, arg3, arg4, arg5, arg6);
             }
             else
             {
