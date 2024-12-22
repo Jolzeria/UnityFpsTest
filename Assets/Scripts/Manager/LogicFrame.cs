@@ -19,10 +19,10 @@ public class LogicFrame : MonoBehaviour
 
     private void OnDestroy()
     {
-        EventHandler.UnInit();
         ParabolaCurveManager.UnInit();
         BulletPool.UnInit();
         DamageManager.UnInit();
+        EventHandler.UnInit();
     }
 
     private void Update()
