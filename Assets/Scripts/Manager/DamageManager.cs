@@ -5,22 +5,26 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-public static class DamageManager
+public class DamageManager : Singleton<DamageManager>
 {
-    private static Queue<DamageInfo> damageInfos;
+    private DamageManager()
+    {
+    }
 
-    public static void Init()
+    private Queue<DamageInfo> damageInfos;
+
+    public void Init()
     {
         damageInfos = new Queue<DamageInfo>();
     }
 
-    public static void UnInit()
+    public void UnInit()
     {
         damageInfos.Clear();
         damageInfos = null;
     }
 
-    public static void Update()
+    public void Update()
     {
         while (damageInfos.Count > 0)
         {
@@ -29,15 +33,14 @@ public static class DamageManager
         }
     }
 
-    public static void Add(DamageInfo damageInfo)
+    public void Add(DamageInfo damageInfo)
     {
         if (damageInfo == null)
             return;
         damageInfos.Enqueue(damageInfo);
     }
 
-    public static void Remove()
+    public void Remove()
     {
-
     }
 }

@@ -21,6 +21,6 @@ public class EntityUnit : BeUnit
             receiver = hitInfo.collider.GetComponentInParent<BeUnit>(),
             hitPoint = hitInfo.point
         };
-        DamageManager.Add(damageInfo);
+        DamageManager.Instance.Add(damageInfo);
     }
 }

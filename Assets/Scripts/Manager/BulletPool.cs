@@ -2,13 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System;
 
-public static class BulletPool
+public class BulletPool : Singleton<BulletPool>
 {
-    private static Queue<GameObject> m_BulletPool;
-    private static Transform m_PoolTransform;
+    // 私有化构造函数，禁止实例化
+    private BulletPool()
+    {
+    }
 
-    public static void Init(Transform parent)
+    private Queue<GameObject> m_BulletPool;
+    private Transform m_PoolTransform;
+
+    public void Init(Transform parent)
     {
         m_BulletPool = new Queue<GameObject>();
 
@@ -21,17 +27,18 @@ public static class BulletPool
             {
                 continue;
             }
+
             Release(bullet);
         }
     }
 
-    public static void UnInit()
+    public void UnInit()
     {
         m_BulletPool?.Clear();
         m_BulletPool = null;
     }
 
-    public static GameObject Get()
+    public GameObject Get()
     {
         if (m_BulletPool == null) return null;
 
@@ -45,7 +52,7 @@ public static class BulletPool
         return CreateBullet();
     }
 
-    public static void Release(GameObject bullet)
+    public void Release(GameObject bullet)
     {
         if (bullet == null) return;
         if (m_BulletPool == null) return;
@@ -59,7 +66,7 @@ public static class BulletPool
         }
     }
 
-    private static GameObject CreateBullet()
+    private GameObject CreateBullet()
     {
         var bulletPrefab = Resources.Load<GameObject>("Bullet");
         var bullet = GameObject.Instantiate(bulletPrefab);

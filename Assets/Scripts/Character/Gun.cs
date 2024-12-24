@@ -78,15 +78,15 @@ public class Gun : MonoBehaviour
             duration = duration
         };
 
-        ParabolaCurveManager.Add(bulletCreateData, bullet);
+        ParabolaCurveManager.Instance.Add(bulletCreateData, bullet);
     }
 
     private GameObject CreateBullet()
     {
-        var bullet = BulletPool.Get();
+        var bullet = BulletPool.Instance.Get();
         var bulletEntity = bullet.AddComponent<EntityUnit>();
-        var OriginalCreator = transform.GetComponentInParent<BeUnit>();
-        bulletEntity.OriginalCreator = OriginalCreator;
+        var originalCreator = transform.GetComponentInParent<BeUnit>();
+        bulletEntity.OriginalCreator = originalCreator;
 
         bullet.transform.localScale = Vector3.one;
 

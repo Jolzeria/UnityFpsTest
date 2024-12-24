@@ -6,25 +6,29 @@ using UnityEngine;
 /// <summary>
 /// 抛物线类，控制子弹轨迹等
 /// </summary>
-public static class ParabolaCurveManager
+public class ParabolaCurveManager : Singleton<ParabolaCurveManager>
 {
-    private static Dictionary<int, GameObject> bulletObjectDic;
-    private static List<ParabolaCurveCreateData> parabolaCurveCreateDatas;
-    private static List<ParabolaCurveUpdateData> parabolaCurveUpdateDatas;
+    private ParabolaCurveManager()
+    {
+    }
 
-    public static void Init()
+    private Dictionary<int, GameObject> bulletObjectDic;
+    private List<ParabolaCurveCreateData> parabolaCurveCreateDatas;
+    private List<ParabolaCurveUpdateData> parabolaCurveUpdateDatas;
+
+    public void Init()
     {
         bulletObjectDic = new Dictionary<int, GameObject>();
         parabolaCurveCreateDatas = new List<ParabolaCurveCreateData>();
         parabolaCurveUpdateDatas = new List<ParabolaCurveUpdateData>();
     }
 
-    public static void UnInit()
+    public void UnInit()
     {
         foreach (var kPair in bulletObjectDic)
         {
             var bullet = kPair.Value;
-            BulletPool.Release(bullet);
+            BulletPool.Instance.Release(bullet);
         }
 
         bulletObjectDic.Clear();
@@ -35,12 +39,11 @@ public static class ParabolaCurveManager
         parabolaCurveUpdateDatas = null;
     }
 
-    public static void Update()
+    public void Update()
     {
-
     }
 
-    public static void FixedUpdate()
+    public void FixedUpdate()
     {
         for (int i = 0; i < parabolaCurveUpdateDatas.Count; i++)
         {
@@ -52,11 +55,13 @@ public static class ParabolaCurveManager
         }
     }
 
-    public static void Add(ParabolaCurveCreateData data, GameObject bullet)
+    public void Add(ParabolaCurveCreateData data, GameObject bullet)
     {
         //obj.transform.SetPositionAndRotation(data.startPoint, data.startRotation);
         bullet.transform.position = data.startPoint;
-        bullet.transform.rotation = data.followRotate ? Quaternion.LookRotation(data.direction, data.startRotation * Vector3.up) : data.startRotation;
+        bullet.transform.rotation = data.followRotate
+            ? Quaternion.LookRotation(data.direction, data.startRotation * Vector3.up)
+            : data.startRotation;
 
         bulletObjectDic.Add(data.uid, bullet);
         parabolaCurveCreateDatas.Add(data);
@@ -74,7 +79,7 @@ public static class ParabolaCurveManager
         parabolaCurveUpdateDatas.Add(bulletUpdateData);
     }
 
-    public static void Remove(int uid)
+    public void Remove(int uid)
     {
         if (bulletObjectDic.TryGetValue(uid, out var bullet))
         {
@@ -101,7 +106,7 @@ public static class ParabolaCurveManager
         }
     }
 
-    private static ParabolaCurveUpdateData UpdateData(ParabolaCurveUpdateData data, float deltaTime)
+    private ParabolaCurveUpdateData UpdateData(ParabolaCurveUpdateData data, float deltaTime)
     {
         var gravity = Mathf.Abs(data.gravity);
         var velocity = data.velocity - new Vector3(0, gravity * deltaTime, 0);
@@ -123,7 +128,7 @@ public static class ParabolaCurveManager
         return newData;
     }
 
-    private static void UpdateObject(ParabolaCurveUpdateData curData, ParabolaCurveUpdateData nextData)
+    private void UpdateObject(ParabolaCurveUpdateData curData, ParabolaCurveUpdateData nextData)
     {
         // 判空
         if (!bulletObjectDic.TryGetValue(nextData.uid, out var obj))
@@ -149,15 +154,15 @@ public static class ParabolaCurveManager
             switch (layer)
             {
                 case Layer.Enemy:
+                {
+                    if (bulletObjectDic.TryGetValue(nextData.uid, out var bullet))
                     {
-                        if (bulletObjectDic.TryGetValue(nextData.uid, out var bullet))
-                        {
-                            var entity = bullet.GetComponent<EntityUnit>();
-                            var snapShot = new SnapShot(entity.OriginalCreator);
+                        var entity = bullet.GetComponent<EntityUnit>();
+                        var snapShot = new SnapShot(entity.OriginalCreator);
 
-                            EventHandler.ExecuteEvent(entity, GameEventEnum.OnCollision, hitInfo, snapShot);
-                        }
+                        EventHandler.ExecuteEvent(entity, GameEventEnum.OnCollision, hitInfo, snapShot);
                     }
+                }
                     break;
             }
 
@@ -173,12 +178,12 @@ public static class ParabolaCurveManager
         }
     }
 
-    private static void ReleaseBullet(GameObject bullet)
+    private void ReleaseBullet(GameObject bullet)
     {
-        BulletPool.Release(bullet);
+        BulletPool.Instance.Release(bullet);
     }
 
-    private static bool IsBounding(ParabolaCurveUpdateData curData, ParabolaCurveUpdateData nextData, out RaycastHit hitInfo)
+    private bool IsBounding(ParabolaCurveUpdateData curData, ParabolaCurveUpdateData nextData, out RaycastHit hitInfo)
     {
         // 计算出射线方向
         var rayDirection = nextData.point - curData.point;
