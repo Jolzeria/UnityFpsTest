@@ -7,18 +7,14 @@ using UnityEngine;
 /// </summary>
 public class DamageManager : Singleton<DamageManager>
 {
-    private DamageManager()
-    {
-    }
-
     private Queue<DamageInfo> damageInfos;
 
-    public void Init()
+    public override void Init()
     {
         damageInfos = new Queue<DamageInfo>();
     }
 
-    public void UnInit()
+    public override void UnInit()
     {
         damageInfos.Clear();
         damageInfos = null;

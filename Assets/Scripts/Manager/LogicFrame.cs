@@ -8,9 +8,7 @@ public class LogicFrame : MonoBehaviour
     private void Awake()
     {
         EventHandler.Init();
-        ParabolaCurveManager.Instance.Init();
-        BulletPool.Instance.Init(transform.Find("Pool"));
-        DamageManager.Instance.Init();
+        BulletPool.Instance.SetParent(transform.Find("Pool"));
     }
 
     private void Start()

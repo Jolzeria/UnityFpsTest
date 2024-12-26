@@ -8,22 +8,18 @@ using UnityEngine;
 /// </summary>
 public class ParabolaCurveManager : Singleton<ParabolaCurveManager>
 {
-    private ParabolaCurveManager()
-    {
-    }
-
     private Dictionary<int, GameObject> bulletObjectDic;
     private List<ParabolaCurveCreateData> parabolaCurveCreateDatas;
     private List<ParabolaCurveUpdateData> parabolaCurveUpdateDatas;
 
-    public void Init()
+    public override void Init()
     {
         bulletObjectDic = new Dictionary<int, GameObject>();
         parabolaCurveCreateDatas = new List<ParabolaCurveCreateData>();
         parabolaCurveUpdateDatas = new List<ParabolaCurveUpdateData>();
     }
 
-    public void UnInit()
+    public override void UnInit()
     {
         foreach (var kPair in bulletObjectDic)
         {

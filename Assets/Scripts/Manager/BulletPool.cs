@@ -6,18 +6,22 @@ using System;
 
 public class BulletPool : Singleton<BulletPool>
 {
-    // 私有化构造函数，禁止实例化
-    private BulletPool()
-    {
-    }
-
     private Queue<GameObject> m_BulletPool;
     private Transform m_PoolTransform;
-
-    public void Init(Transform parent)
+    
+    public override void Init()
     {
         m_BulletPool = new Queue<GameObject>();
+    }
 
+    public override void UnInit()
+    {
+        m_BulletPool?.Clear();
+        m_BulletPool = null;
+    }
+    
+    public void SetParent(Transform parent)
+    {
         m_PoolTransform = parent;
 
         for (int i = 0; i < 3; i++)
@@ -30,12 +34,6 @@ public class BulletPool : Singleton<BulletPool>
 
             Release(bullet);
         }
-    }
-
-    public void UnInit()
-    {
-        m_BulletPool?.Clear();
-        m_BulletPool = null;
     }
 
     public GameObject Get()

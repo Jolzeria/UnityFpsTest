@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class Singleton<T> where T : class
+public class Singleton<T> where T : class, new()
 {
     private static T instance;
     protected bool m_Init;
