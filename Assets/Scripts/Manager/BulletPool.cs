@@ -11,11 +11,15 @@ public class BulletPool : Singleton<BulletPool>
     
     public override void Init()
     {
+        base.Init();
+        
         m_BulletPool = new Queue<GameObject>();
     }
 
     public override void UnInit()
     {
+        base.UnInit();
+        
         m_BulletPool?.Clear();
         m_BulletPool = null;
     }

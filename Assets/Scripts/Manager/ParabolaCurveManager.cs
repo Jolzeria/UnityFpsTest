@@ -14,6 +14,8 @@ public class ParabolaCurveManager : Singleton<ParabolaCurveManager>
 
     public override void Init()
     {
+        base.Init();
+        
         bulletObjectDic = new Dictionary<int, GameObject>();
         parabolaCurveCreateDatas = new List<ParabolaCurveCreateData>();
         parabolaCurveUpdateDatas = new List<ParabolaCurveUpdateData>();
@@ -21,6 +23,8 @@ public class ParabolaCurveManager : Singleton<ParabolaCurveManager>
 
     public override void UnInit()
     {
+        base.UnInit();
+        
         foreach (var kPair in bulletObjectDic)
         {
             var bullet = kPair.Value;

@@ -11,11 +11,15 @@ public class DamageManager : Singleton<DamageManager>
 
     public override void Init()
     {
+        base.Init();
+        
         damageInfos = new Queue<DamageInfo>();
     }
 
     public override void UnInit()
     {
+        base.UnInit();
+        
         damageInfos.Clear();
         damageInfos = null;
     }
