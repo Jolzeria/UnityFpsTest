@@ -37,7 +37,7 @@ public class DamageManager : Singleton<DamageManager>
     {
         if (damageInfo == null)
             return;
-        damageInfos.Enqueue(damageInfo);
+        damageInfos?.Enqueue(damageInfo);
     }
 
     public void Remove()

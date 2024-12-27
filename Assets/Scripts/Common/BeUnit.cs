@@ -5,7 +5,7 @@ using UnityEngine;
 public class BeUnit : MonoBehaviour
 {
     protected BaseAttribute attribute;
-    public BeUnit OriginalCreator {  get; set; }
+    public BeUnit OriginalCreator { get; set; }
 
     private void Start()
     {
@@ -41,7 +41,8 @@ public class BeUnit : MonoBehaviour
     {
         Debug.Log("player ATK:" + damageInfo.snapShot.GetAttrValue(AttributeType.ATK));
         Debug.Log("receiver DEF:" + damageInfo.receiver.GetAttrValue(AttributeType.DEF));
-        float addHp = damageInfo.receiver.GetAttrValue(AttributeType.DEF) - damageInfo.snapShot.GetAttrValue(AttributeType.ATK);
+        float addHp = damageInfo.receiver.GetAttrValue(AttributeType.DEF) -
+                      damageInfo.snapShot.GetAttrValue(AttributeType.ATK);
         if (addHp > 0)
             addHp = 0f;
 
@@ -51,6 +52,7 @@ public class BeUnit : MonoBehaviour
             Debug.Log("敌人已死亡");
             return;
         }
+
         if (Mathf.Abs(addHp) >= curHp)
         {
             addHp = -curHp;
@@ -59,11 +61,13 @@ public class BeUnit : MonoBehaviour
 
         damageInfo.receiver.AddAttrValue(AttributeType.CurHp, addHp);
         Debug.Log("receiver CurHp:" + damageInfo.receiver.GetAttrValue(AttributeType.CurHp));
+
+        DamageTextManager.Instance.Add(new DamageTextManager.DamageTextData()
+            {position = damageInfo.receiver.transform.position, damage = Mathf.RoundToInt(addHp)});
     }
 
     public void AddAttrValue(AttributeType attr, float value)
     {
-
         attribute.AddAttrValue(attr, value);
     }
 

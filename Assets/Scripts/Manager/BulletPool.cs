@@ -70,8 +70,8 @@ public class BulletPool : Singleton<BulletPool>
 
     private GameObject CreateBullet()
     {
-        var bulletPrefab = Resources.Load<GameObject>("Bullet");
-        var bullet = GameObject.Instantiate(bulletPrefab);
-        return bullet;
+        var prefab = Resources.Load<GameObject>("Bullet");
+        var obj = GameObject.Instantiate(prefab);
+        return obj;
     }
 }
