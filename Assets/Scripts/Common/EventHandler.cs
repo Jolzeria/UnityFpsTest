@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 public static class EventHandler
 {
     public delegate void Action<T>(T arg);
+
     public delegate void Action<T1, T2>(T1 arg1, T2 arg2);
 
     private static Dictionary<BeUnit, Dictionary<string, Delegate>> events;
@@ -27,6 +28,7 @@ public static class EventHandler
 
             events.Clear();
         }
+
         events = null;
     }
 
@@ -52,7 +54,6 @@ public static class EventHandler
         {
             unitEvents[eventName] = action;
         }
-
     }
 
     public static void RegisterEvent<T>(BeUnit beUnit, string eventName, Action<T> action)
@@ -77,7 +78,6 @@ public static class EventHandler
         {
             unitEvents[eventName] = action;
         }
-
     }
 
     public static void RegisterEvent<T1, T2>(BeUnit beUnit, string eventName, Action<T1, T2> action)
@@ -102,7 +102,6 @@ public static class EventHandler
         {
             unitEvents[eventName] = action;
         }
-
     }
 
     public static void RegisterEvent<T1, T2, T3>(BeUnit beUnit, string eventName, Action<T1, T2, T3> action)
@@ -127,7 +126,6 @@ public static class EventHandler
         {
             unitEvents[eventName] = action;
         }
-
     }
 
     public static void RegisterEvent<T1, T2, T3, T4>(BeUnit beUnit, string eventName, Action<T1, T2, T3, T4> action)
@@ -152,10 +150,10 @@ public static class EventHandler
         {
             unitEvents[eventName] = action;
         }
-
     }
 
-    public static void RegisterEvent<T1, T2, T3, T4, T5>(BeUnit beUnit, string eventName, Action<T1, T2, T3, T4, T5> action)
+    public static void RegisterEvent<T1, T2, T3, T4, T5>(BeUnit beUnit, string eventName,
+        Action<T1, T2, T3, T4, T5> action)
     {
         if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
         {
@@ -177,10 +175,10 @@ public static class EventHandler
         {
             unitEvents[eventName] = action;
         }
-
     }
 
-    public static void RegisterEvent<T1, T2, T3, T4, T5, T6>(BeUnit beUnit, string eventName, Action<T1, T2, T3, T4, T5, T6> action)
+    public static void RegisterEvent<T1, T2, T3, T4, T5, T6>(BeUnit beUnit, string eventName,
+        Action<T1, T2, T3, T4, T5, T6> action)
     {
         if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
         {
@@ -202,9 +200,7 @@ public static class EventHandler
         {
             unitEvents[eventName] = action;
         }
-
     }
-
 
 
     public static void UnRegisterEvent(BeUnit beUnit, string eventName, Action action)
@@ -215,7 +211,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             var newDelegate = Delegate.Remove(existingDelegate, action);
 
@@ -241,7 +238,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             var newDelegate = Delegate.Remove(existingDelegate, action);
 
@@ -267,7 +265,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             var newDelegate = Delegate.Remove(existingDelegate, action);
 
@@ -293,7 +292,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             var newDelegate = Delegate.Remove(existingDelegate, action);
 
@@ -319,7 +319,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             var newDelegate = Delegate.Remove(existingDelegate, action);
 
@@ -337,7 +338,8 @@ public static class EventHandler
         }
     }
 
-    public static void UnRegisterEvent<T1, T2, T3, T4, T5>(BeUnit beUnit, string eventName, Action<T1, T2, T3, T4, T5> action)
+    public static void UnRegisterEvent<T1, T2, T3, T4, T5>(BeUnit beUnit, string eventName,
+        Action<T1, T2, T3, T4, T5> action)
     {
         if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
         {
@@ -345,7 +347,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             var newDelegate = Delegate.Remove(existingDelegate, action);
 
@@ -363,7 +366,8 @@ public static class EventHandler
         }
     }
 
-    public static void UnRegisterEvent<T1, T2, T3, T4, T5, T6>(BeUnit beUnit, string eventName, Action<T1, T2, T3, T4, T5, T6> action)
+    public static void UnRegisterEvent<T1, T2, T3, T4, T5, T6>(BeUnit beUnit, string eventName,
+        Action<T1, T2, T3, T4, T5, T6> action)
     {
         if (beUnit == null || string.IsNullOrEmpty(eventName) || action == null)
         {
@@ -371,7 +375,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             var newDelegate = Delegate.Remove(existingDelegate, action);
 
@@ -388,7 +393,6 @@ public static class EventHandler
             }
         }
     }
-
 
 
     public static void ExecuteEvent(BeUnit beUnit, string eventName)
@@ -399,7 +403,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             if (existingDelegate is Action action)
             {
@@ -424,7 +429,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             if (existingDelegate is Action<T> action)
             {
@@ -449,7 +455,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             if (existingDelegate is Action<T1, T2> action)
             {
@@ -474,7 +481,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             if (existingDelegate is Action<T1, T2, T3> action)
             {
@@ -499,7 +507,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             if (existingDelegate is Action<T1, T2, T3, T4> action)
             {
@@ -516,7 +525,8 @@ public static class EventHandler
         }
     }
 
-    public static void ExecuteEvent<T1, T2, T3, T4, T5>(BeUnit beUnit, string eventName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)
+    public static void ExecuteEvent<T1, T2, T3, T4, T5>(BeUnit beUnit, string eventName, T1 arg1, T2 arg2, T3 arg3,
+        T4 arg4, T5 arg5)
     {
         if (beUnit == null || string.IsNullOrEmpty(eventName))
         {
@@ -524,7 +534,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             if (existingDelegate is Action<T1, T2, T3, T4, T5> action)
             {
@@ -541,7 +552,8 @@ public static class EventHandler
         }
     }
 
-    public static void ExecuteEvent<T1, T2, T3, T4, T5, T6>(BeUnit beUnit, string eventName, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)
+    public static void ExecuteEvent<T1, T2, T3, T4, T5, T6>(BeUnit beUnit, string eventName, T1 arg1, T2 arg2, T3 arg3,
+        T4 arg4, T5 arg5, T6 arg6)
     {
         if (beUnit == null || string.IsNullOrEmpty(eventName))
         {
@@ -549,7 +561,8 @@ public static class EventHandler
             return;
         }
 
-        if (events.TryGetValue(beUnit, out var unitEvents) && unitEvents.TryGetValue(eventName, out var existingDelegate))
+        if (events.TryGetValue(beUnit, out var unitEvents) &&
+            unitEvents.TryGetValue(eventName, out var existingDelegate))
         {
             if (existingDelegate is Action<T1, T2, T3, T4, T5, T6> action)
             {

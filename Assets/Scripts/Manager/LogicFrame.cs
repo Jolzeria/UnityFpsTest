@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 
 public class LogicFrame : MonoBehaviour
@@ -10,7 +11,8 @@ public class LogicFrame : MonoBehaviour
         EventHandler.Init();
         
         BulletPool.Instance.SetParent(transform.Find("Pool"));
-        DamageTextManager.Instance.SetParent(transform.Find("DamageCanvas"));
+        DamageTextPool.Instance.SetParent(transform.Find("DamageTextPool"));
+        DamageTextManager.Instance.SetCanvas(transform.Find("DamageCanvas"));
         CharacterManager.Instance.Init();
     }
 
@@ -22,6 +24,7 @@ public class LogicFrame : MonoBehaviour
     {
         ParabolaCurveManager.Instance.UnInit();
         BulletPool.Instance.UnInit();
+        DamageTextPool.Instance.UnInit();
         DamageManager.Instance.UnInit();
         DamageTextManager.Instance.UnInit();
         CharacterManager.Instance.UnInit();

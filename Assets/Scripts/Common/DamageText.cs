@@ -1,3 +1,4 @@
+using Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,7 +48,10 @@ public class DamageText : MonoBehaviour
 
         lifeTime -= Time.deltaTime;
         if (lifeTime <= 0)
-            gameObject.SetActive(false);
+        {
+            lifeTime = 2;
+            DamageTextPool.Instance.Release(gameObject);
+        }
     }
 
     public void SetData(DamageTextManager.DamageTextData data, Transform trans)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,15 +48,14 @@ public class DamageTextManager : Singleton<DamageTextManager>
         damageTextInfos?.Enqueue(damageTextData);
     }
     
-    public void SetParent(Transform parent)
+    public void SetCanvas(Transform parent)
     {
         m_CanvasTransform = parent;
     }
     
     private GameObject CreateDamageText()
     {
-        var prefab = Resources.Load<GameObject>("DamageText");
-        var obj = GameObject.Instantiate(prefab);
-        return obj;
+        var damageText = DamageTextPool.Instance.Get();
+        return damageText;
     }
 }
