@@ -10,7 +10,7 @@ public class LogicFrame : MonoBehaviour
     {
         EventHandler.Init();
         
-        BulletPool.Instance.SetParent(transform.Find("Pool"));
+        BulletPool.Instance.SetParent(transform.Find("BulletPool"));
         DamageTextPool.Instance.SetParent(transform.Find("DamageTextPool"));
         DamageTextManager.Instance.SetCanvas(transform.Find("DamageCanvas"));
         CharacterManager.Instance.Init();
