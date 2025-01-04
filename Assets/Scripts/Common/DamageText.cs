@@ -1,6 +1,8 @@
+using System;
 using Manager;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class DamageText : MonoBehaviour
 {
@@ -8,7 +10,9 @@ public class DamageText : MonoBehaviour
     private Text m_text;
     private RectTransform m_rect;
     private RectTransform m_canvasRect;
-    private float lifeTime;
+    private float m_lifeTime;
+    private float m_alpha;
+    private Vector3 m_offset;
 
     private int minFontSize = 40;
     private int maxFontSize = 80;
@@ -17,19 +21,32 @@ public class DamageText : MonoBehaviour
     {
         m_text = transform.GetComponent<Text>();
         m_rect = transform.GetComponent<RectTransform>();
+    }
 
-        lifeTime = 2f;
+    private void OnEnable()
+    {
+        m_lifeTime = 2f;
+        m_alpha = 1f;
+        m_offset = Vector3.zero;
+    }
+
+    private void OnDisable()
+    {
+        
     }
 
     void Update()
     {
-        if (lifeTime > 0)
+        if (m_lifeTime > 0)
         {
             if (m_canvasRect == null)
                 return;
 
+            m_offset = new Vector3(0, m_offset.y + 1 * Time.deltaTime, 0);
+            m_alpha -= 0.5f * Time.deltaTime;
+
             var canvasRectTransform = m_canvasRect;
-            var showPosition = m_damageTextData.position + new Vector3(0, 3, 0);
+            var showPosition = m_damageTextData.position + m_offset;
             var screenPosition = Camera.main.WorldToScreenPoint(showPosition);
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -44,13 +61,18 @@ public class DamageText : MonoBehaviour
             var distanceVector = characterTrans.position - transform.position;
             var sqrDistance = distanceVector.sqrMagnitude;
             m_text.fontSize = (int) Mathf.Lerp(minFontSize, maxFontSize, Mathf.InverseLerp(0f, 1300000f, sqrDistance));
+
+            // 控制渐隐
+            var currentColor = m_text.color;
+            currentColor.a = m_alpha;
+            m_text.color = currentColor;
         }
 
-        lifeTime -= Time.deltaTime;
-        if (lifeTime <= 0)
+        m_lifeTime -= Time.deltaTime;
+        if (m_lifeTime <= 0)
         {
-            lifeTime = 2;
             DamageTextPool.Instance.Release(gameObject);
+            DamageTextManager.Instance.RemoveLivedText(m_damageTextData);
         }
     }
 

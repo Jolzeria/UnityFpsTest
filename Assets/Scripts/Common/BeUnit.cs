@@ -63,7 +63,7 @@ public class BeUnit : MonoBehaviour
         Debug.Log("receiver CurHp:" + damageInfo.receiver.GetAttrValue(AttributeType.CurHp));
 
         DamageTextManager.Instance.Add(new DamageTextManager.DamageTextData()
-            {position = damageInfo.receiver.transform.position, damage = Mathf.RoundToInt(addHp)});
+            {position = damageInfo.hitPoint, damage = Mathf.RoundToInt(addHp)});
     }
 
     public void AddAttrValue(AttributeType attr, float value)
