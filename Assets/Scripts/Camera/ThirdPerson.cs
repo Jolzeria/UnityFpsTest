@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class ThirdPerson : MonoBehaviour
     private Quaternion charaRotation;
     private float m_Pitch;
     private float m_Yaw;
+    private bool m_isAlt;
 
     public float rotateSpeed = 10f;
     public float cameraDisChara = 5f;
@@ -22,7 +24,33 @@ public class ThirdPerson : MonoBehaviour
         charaRotation = player.transform.rotation;
         m_Pitch = transform.rotation.x;
         m_Yaw = transform.rotation.y;
+
+        m_isAlt = false;
     }
+
+    /*private void Update()
+    {
+        // 隐藏鼠标光标
+        if (!m_isAlt)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        
+        // 按了alt键后解除光标的隐藏状态
+        if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyDown(KeyCode.RightAlt))
+        {
+            m_isAlt = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        
+        // 左键点击屏幕恢复隐藏状态
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            m_isAlt = false;
+        }
+    }*/
 
     private void FixedUpdate()
     {
@@ -54,6 +82,14 @@ public class ThirdPerson : MonoBehaviour
             m_Pitch -= vertical;
             m_Pitch = Mathf.Clamp(m_Pitch, -70, 70);
         }
+        /*if (!m_isAlt)
+        {
+            //transform.rotation = Quaternion.Euler(oriRotation.x, oriRotation.y + mouseX, oriRotation.z);
+            m_Yaw += horizontal;
+            // pitch向下时值增大，相反
+            m_Pitch -= vertical;
+            m_Pitch = Mathf.Clamp(m_Pitch, -70, 70);
+        }*/
         // 先将当前物体坐标系转向世界坐标系z轴正方向
         // 再绕 Z 轴旋转 0 角度，绕 X 轴旋转 m_Pitch 角度，绕 Y 轴旋转 m_Yaw 角度
         transform.rotation = charaRotation * (Quaternion.Euler(m_Pitch, m_Yaw, 0) * Quaternion.LookRotation(Vector3.forward));

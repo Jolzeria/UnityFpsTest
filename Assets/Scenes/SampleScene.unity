@@ -1224,10 +1224,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: sight
       objectReference: {fileID: 0}
-    - target: {fileID: 2505571506906644882, guid: a3fe8043f88e43a40994590d7f403536, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1303,7 +1299,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3992194354780079269, guid: 31e4a8bd90399dc44af2b643e7b1b1ca, type: 3}
       propertyPath: speed
-      value: 2
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3992194354780079269, guid: 31e4a8bd90399dc44af2b643e7b1b1ca, type: 3}
       propertyPath: gravity
