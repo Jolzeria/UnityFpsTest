@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 733792283574495754}
   - component: {fileID: 8519461129560048717}
   - component: {fileID: 2080165110782178190}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 6441624717485896715}
   - component: {fileID: 7214125399290634504}
   - component: {fileID: 7907947559205479160}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4608608161232857895}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: gunSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 4955517728540963890}
   - component: {fileID: 4885721474839414546}
   - component: {fileID: 6568751967788514927}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 3508748802632938150}
   - component: {fileID: 5829220492976392570}
   - component: {fileID: 2864099656964543923}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -473,7 +473,7 @@ GameObject:
   - component: {fileID: 1662364758383368930}
   - component: {fileID: 7521480164373688530}
   - component: {fileID: 9121378666204460587}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -575,7 +575,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1817758004470227394}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}

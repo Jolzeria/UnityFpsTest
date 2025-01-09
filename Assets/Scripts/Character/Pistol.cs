@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class Gun : MonoBehaviour
+public class Pistol : MonoBehaviour
 {
     public float speed = 10f;
     public float gravity = 0f;
