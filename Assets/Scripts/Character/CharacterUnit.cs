@@ -47,5 +47,8 @@ public class CharacterUnit : BeUnit
         gun.transform.SetParent(gunSlot);
         gun.transform.localPosition = Vector3.zero;
         gun.transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+        var script = gun.GetComponent<BaseGun>();
+        script.EquipWeapon(this);
     }
 }

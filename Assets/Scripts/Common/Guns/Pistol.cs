@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class Pistol : MonoBehaviour
+public class Pistol : BaseGun
 {
     public float speed = 10f;
     public float gravity = 0f;
@@ -11,18 +11,21 @@ public class Pistol : MonoBehaviour
     public float shootInterval = 0.5f;
     public float duration = 5f;
 
-    private Transform muzzle;
-    private float shootTimer;
-
-    private void Start()
+    protected override void Init()
     {
-        muzzle = transform.Find("root/muzzle");
-        shootTimer = 0f;
+        base.Init();
+
+        ATK = 20;
+        CurAmmo = 7;
+        MaxAmmo = 42;
+        MagazineAmmo = 7;
     }
 
-    private void Update()
+    protected override void OnUpdate()
     {
-        //TODO:发射子弹
+        base.OnUpdate();
+        
+        // 发射子弹
         if (Input.GetKey(KeyCode.Mouse0))
         {
             if (shootTimer <= 0)
@@ -38,10 +41,6 @@ public class Pistol : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-    }
-
     private void Shoot()
     {
         //var rb = bullet.transform.SafeAddComponent<Rigidbody>();
@@ -52,6 +51,30 @@ public class Pistol : MonoBehaviour
         //float forwardSpeed = Vector3.Dot(rb.velocity, bullet.transform.forward);
         //if (forwardSpeed == 0)
         //    rb.AddForce(bullet.transform.forward * 2000f);
+
+        // 没子弹了
+        if (CurAmmo == 0 && MaxAmmo == 0)
+        {
+            Debug.Log("没子弹了");
+            return;
+        }
+        
+        // 换弹匣
+        if (CurAmmo == 0 && MaxAmmo > 0)
+        {
+            var reloadAmmoNum = MagazineAmmo;
+            if (MaxAmmo < MagazineAmmo)
+                reloadAmmoNum = MaxAmmo;
+            CurAmmo = reloadAmmoNum;
+            equippedUnit.AddAttrValue(AttributeType.CurAmmo, reloadAmmoNum);
+            MaxAmmo -= reloadAmmoNum;
+            equippedUnit.AddAttrValue(AttributeType.MaxAmmo, -reloadAmmoNum);
+            Debug.Log("换子弹");
+            return;
+        }
+
+        CurAmmo -= 1f;
+        equippedUnit.AddAttrValue(AttributeType.CurAmmo, -1);
 
         var mainCameraTrans = Camera.main.transform;
         float realDuration;

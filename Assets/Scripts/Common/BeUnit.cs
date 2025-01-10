@@ -75,4 +75,9 @@ public class BeUnit : MonoBehaviour
     {
         return attribute.GetAttrValue(attr);
     }
+    
+    public void SetAttrValue(AttributeType attr, float value)
+    {
+        attribute.SetAttrValue(attr, value);
+    }
 }

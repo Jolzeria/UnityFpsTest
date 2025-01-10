@@ -10,13 +10,15 @@ public class CharacterAttribute : BaseAttribute
             case AttributeType.MaxHp:
                 return 100;
             case AttributeType.CurAmmo:
-                return 10;
+                return 1;
             case AttributeType.MaxAmmo:
-                return 10;
+                return 1;
+            case AttributeType.MagazineAmmo:
+                return 1;
             case AttributeType.MoveSpeedRate:
                 return 1;
             case AttributeType.ATK:
-                return 10;
+                return 0;
             case AttributeType.DEF:
                 return 0;
             default:

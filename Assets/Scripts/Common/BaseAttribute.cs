@@ -9,6 +9,7 @@ public enum AttributeType
     MaxMp,
     CurAmmo,
     MaxAmmo,
+    MagazineAmmo,
     MoveSpeedRate,
     ATK,
     DEF,
@@ -48,6 +49,11 @@ public abstract class BaseAttribute
     public float GetAttrValue(AttributeType attr)
     {
         return attritubes[attr];
+    }
+    
+    public void SetAttrValue(AttributeType attr, float value)
+    {
+        attritubes[attr] = value;
     }
 
     protected abstract float GetBaseValue(AttributeType attr);
