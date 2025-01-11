@@ -15,6 +15,7 @@ public class CharacterUnit : BeUnit
         attribute.Init();
 
         gunSlot = transform.Find("root/gunSlot");
+        // 默认装备
         EquipWeapon(GunType.Pistol);
     }
 
@@ -40,7 +41,7 @@ public class CharacterUnit : BeUnit
         }
     }
 
-    public void EquipWeapon(GunType gunType)
+    private void EquipWeapon(GunType gunType)
     {
         var gun = GunPool.Instance.Get(this, gunType);
         

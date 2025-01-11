@@ -7,11 +7,13 @@ public class BaseGun : MonoBehaviour
     protected Transform muzzle;
     protected float shootTimer;
     protected BeUnit equippedUnit;
+    protected bool isLoading = false;
 
     protected float ATK;
     protected float CurAmmo;
+    protected float MagazineSize;
+    protected float TotalAmmo;
     protected float MaxAmmo;
-    protected float MagazineAmmo;
 
     void Awake()
     {
@@ -43,7 +45,8 @@ public class BaseGun : MonoBehaviour
     {
         equippedUnit.SetAttrValue(AttributeType.ATK, ATK);
         equippedUnit.SetAttrValue(AttributeType.CurAmmo, CurAmmo);
+        equippedUnit.SetAttrValue(AttributeType.MagazineSize, MagazineSize);
+        equippedUnit.SetAttrValue(AttributeType.TotalAmmo, TotalAmmo);
         equippedUnit.SetAttrValue(AttributeType.MaxAmmo, MaxAmmo);
-        equippedUnit.SetAttrValue(AttributeType.MagazineAmmo, MagazineAmmo);
     }
 }
