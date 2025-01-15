@@ -120,27 +120,24 @@ public class GunPool : Singleton<GunPool>
                 gun = GameObject.Instantiate(prefab);
             }
                 break;
-            // case GunType.MachineGun:
-            // {
-            //     var prefab = Resources.Load<GameObject>("MachineGun");
-            //     gun = GameObject.Instantiate(prefab);
-            //     GunPool.Instance.AddGun(this, GunType.MachineGun, gun);
-            // }
-            //     break;
-            // case GunType.Shotgun:
-            // {
-            //     var prefab = Resources.Load<GameObject>("Shotgun");
-            //     gun = GameObject.Instantiate(prefab);
-            //     GunPool.Instance.AddGun(this, GunType.Shotgun, gun);
-            // }
-            //     break;
-            // case GunType.SniperRifle:
-            // {
-            //     var prefab = Resources.Load<GameObject>("SniperRifle");
-            //     gun = GameObject.Instantiate(prefab);
-            //     GunPool.Instance.AddGun(this, GunType.SniperRifle, gun);
-            // }
-            //     break;
+            case GunType.MachineGun:
+            {
+                var prefab = Resources.Load<GameObject>("MachineGun");
+                gun = GameObject.Instantiate(prefab);
+            }
+                break;
+            case GunType.Shotgun:
+            {
+                var prefab = Resources.Load<GameObject>("Shotgun");
+                gun = GameObject.Instantiate(prefab);
+            }
+                break;
+            case GunType.SniperRifle:
+            {
+                var prefab = Resources.Load<GameObject>("SniperRifle");
+                gun = GameObject.Instantiate(prefab);
+            }
+                break;
             default:
                 break;
         }

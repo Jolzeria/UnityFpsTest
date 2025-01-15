@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Pistol : BaseGun
 {
-    public float speed = 10f;
+    public float speed = 100f;
     public float gravity = 0f;
     public bool followRotate = false;
     public float shootInterval = 0.5f;

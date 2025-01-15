@@ -28,10 +28,26 @@ public class CharacterUnit : BeUnit
 
     private void Update()
     {
-        // 按1装备手枪
+        // 按1-4换枪
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            GunPool.Instance.ReleaseUnit(this);
             EquipWeapon(GunType.Pistol);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            GunPool.Instance.ReleaseUnit(this);
+            EquipWeapon(GunType.MachineGun);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            GunPool.Instance.ReleaseUnit(this);
+            EquipWeapon(GunType.Shotgun);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            GunPool.Instance.ReleaseUnit(this);
+            EquipWeapon(GunType.SniperRifle);
         }
 
         // 按5收回所有枪
