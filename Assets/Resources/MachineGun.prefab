@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 644042053912571543}
   - component: {fileID: 435854775479151907}
   - component: {fileID: 7109272879334164304}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: assault4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6325995521137621559}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3584606027476570246}
   - component: {fileID: 8751669488674283884}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: MachineGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3946209159930256319}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8939527379872449160}
   - component: {fileID: 8121426884373279007}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pistol
   m_TagString: Gun
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6337773182337965542}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 140120243085950774}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 2940533990907656071}
   - component: {fileID: 7323710538154119730}
   - component: {fileID: 6298149257774579461}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: pistol3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5101907601934360547}
   - component: {fileID: 313299977530407144}
   - component: {fileID: 5070695226437727198}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: sniper2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8716401884406052246}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1652724324324384127}
   - component: {fileID: 5203297409150681162}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SniperRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3456954559239363134}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}

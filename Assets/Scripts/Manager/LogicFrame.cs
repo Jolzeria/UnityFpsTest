@@ -15,6 +15,8 @@ public class LogicFrame : MonoBehaviour
         GunPool.Instance.SetParent(transform.Find("GunPool"));
         DamageTextManager.Instance.SetCanvas(transform.Find("DamageCanvas"));
         CharacterManager.Instance.Init();
+        
+        FindInstance();
     }
 
     private void Start()
@@ -30,6 +32,7 @@ public class LogicFrame : MonoBehaviour
         DamageTextManager.Instance.UnInit();
         CharacterManager.Instance.UnInit();
         GunPool.Instance.UnInit();
+        InstanceManager.Instance.UnInit();
         
         EventHandler.UnInit();
     }
@@ -44,5 +47,11 @@ public class LogicFrame : MonoBehaviour
     private void FixedUpdate()
     {
         ParabolaCurveManager.Instance.FixedUpdate();
+    }
+
+    private void FindInstance()
+    {
+        InstanceManager.Instance.Add(InstanceType.Sight, transform.Find("2DCanvas/sight"));
+        InstanceManager.Instance.Add(InstanceType.Scope, transform.Find("2DCanvas/Scope"));
     }
 }

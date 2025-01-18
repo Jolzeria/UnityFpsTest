@@ -8,14 +8,13 @@ public class SniperRifle : BaseGun
     public float speed = 100f;
     public float gravity = 0f;
     public bool followRotate = false;
-    public float shootInterval = 0.5f;
-    public float duration = 5f;
+    public float duration = 15f;
 
     protected override void Init()
     {
         base.Init();
 
-        ATK = 20;
+        ATK = 50;
         CurAmmo = 7;
         MagazineSize = 7;
         TotalAmmo = 42;
@@ -27,18 +26,20 @@ public class SniperRifle : BaseGun
         base.OnUpdate();
         
         // 发射子弹
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (shootTimer <= 0)
-            {
-                shootTimer += shootInterval;
-                Shoot();
-            }
-            shootTimer -= Time.deltaTime;
+            Shoot();
         }
-        else
+
+        // 开镜
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            shootTimer = 0;
+            ThirdPerson.OpenScope();
+        }
+
+        if (Input.GetKeyUp((KeyCode.Mouse1)))
+        {
+            ThirdPerson.CloseScope();
         }
     }
 

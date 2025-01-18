@@ -11,6 +11,8 @@ public class ThirdPerson : MonoBehaviour
     private float m_Pitch;
     private float m_Yaw;
     private bool m_isAlt;
+    
+    private static bool m_isScope;
 
     public float rotateSpeed = 10f;
     public float cameraDisChara = 5f;
@@ -26,11 +28,12 @@ public class ThirdPerson : MonoBehaviour
         m_Yaw = transform.rotation.y;
 
         m_isAlt = false;
+        m_isScope = false;
     }
 
-    /*private void Update()
+    private void Update()
     {
-        // 隐藏鼠标光标
+        /*// 隐藏鼠标光标
         if (!m_isAlt)
         {
             Cursor.visible = false;
@@ -49,8 +52,8 @@ public class ThirdPerson : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             m_isAlt = false;
-        }
-    }*/
+        }*/
+    }
 
     private void FixedUpdate()
     {
@@ -68,7 +71,10 @@ public class ThirdPerson : MonoBehaviour
         var vertical = Input.GetAxis("Mouse Y") * rotateSpeed;
 
         Rotate(horizontal, vertical);
-        Move();
+        if (m_isScope)
+            MoveByScope();
+        else
+            Move();
         //transform.rotation = Quaternion.LookRotation(player.transform.position + new Vector3(0, 1, 0) - transform.position);
     }
 
@@ -104,5 +110,38 @@ public class ThirdPerson : MonoBehaviour
         // 通过相机当前的旋转，将相对位置偏移（定义在相机的本地坐标系中）转换到世界坐标系
         Vector3 worldOffset = transform.rotation * relativeOffset;
         transform.position = player.transform.position + worldOffset;
+    }
+
+    private void MoveByScope()
+    {
+        // 定义相机相对于角色的偏移
+        Vector3 relativeOffset = new Vector3(2f, 3f, 5); // 左下方（相机坐标系）
+        // 通过相机当前的旋转，将相对位置偏移（定义在相机的本地坐标系中）转换到世界坐标系
+        Vector3 worldOffset = transform.rotation * relativeOffset;
+        transform.position = player.transform.position + worldOffset;
+    }
+
+    public static void OpenScope()
+    {
+        m_isScope = true;
+        ShowScopeUI();
+    }
+
+    public static void CloseScope()
+    {
+        m_isScope = false;
+        ShowDefaultUI();
+    }
+    
+    private static void ShowScopeUI()
+    {
+        InstanceManager.Instance.Get(InstanceType.Sight).gameObject.SetActive(false);
+        InstanceManager.Instance.Get(InstanceType.Scope).gameObject.SetActive(true);
+    }
+
+    private static void ShowDefaultUI()
+    {
+        InstanceManager.Instance.Get(InstanceType.Sight).gameObject.SetActive(true);
+        InstanceManager.Instance.Get(InstanceType.Scope).gameObject.SetActive(false);
     }
 }
