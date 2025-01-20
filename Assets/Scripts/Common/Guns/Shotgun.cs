@@ -127,7 +127,7 @@ public class Shotgun : BaseGun
 
     private GameObject CreateBullet()
     {
-        var bullet = BulletPool.Instance.Get();
+        var bullet = RoundBulletPool.Instance.Get();
         var bulletEntity = bullet.AddComponent<EntityUnit>();
         var originalCreator = transform.GetComponentInParent<BeUnit>();
         bulletEntity.OriginalCreator = originalCreator;

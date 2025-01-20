@@ -163,7 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 100
   gravity: 0
-  followRotate: 0
+  followRotate: 1
   shootInterval: 0.05
   duration: 5
 --- !u!1 &4839948631808582731

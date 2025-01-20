@@ -11,6 +11,7 @@ public class LogicFrame : MonoBehaviour
         EventHandler.Init();
         
         BulletPool.Instance.SetParent(transform.Find("BulletPool"));
+        RoundBulletPool.Instance.SetParent(transform.Find("RoundBulletPool"));
         DamageTextPool.Instance.SetParent(transform.Find("DamageTextPool"));
         GunPool.Instance.SetParent(transform.Find("GunPool"));
         DamageTextManager.Instance.SetCanvas(transform.Find("DamageCanvas"));
@@ -27,6 +28,7 @@ public class LogicFrame : MonoBehaviour
     {
         ParabolaCurveManager.Instance.UnInit();
         BulletPool.Instance.UnInit();
+        RoundBulletPool.Instance.UnInit();
         DamageTextPool.Instance.UnInit();
         DamageManager.Instance.UnInit();
         DamageTextManager.Instance.UnInit();
