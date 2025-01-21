@@ -15,7 +15,7 @@ public class ParabolaCurveManager : Singleton<ParabolaCurveManager>
     public override void Init()
     {
         base.Init();
-        
+
         bulletObjectDic = new Dictionary<int, GameObject>();
         parabolaCurveCreateDatas = new List<ParabolaCurveCreateData>();
         parabolaCurveUpdateDatas = new List<ParabolaCurveUpdateData>();
@@ -24,7 +24,7 @@ public class ParabolaCurveManager : Singleton<ParabolaCurveManager>
     public override void UnInit()
     {
         base.UnInit();
-        
+
         foreach (var kPair in bulletObjectDic)
         {
             var bullet = kPair.Value;
@@ -143,14 +143,21 @@ public class ParabolaCurveManager : Singleton<ParabolaCurveManager>
         // 碰撞事件
         if (IsBounding(curData, nextData, out var hitInfo))
         {
+            var layer = hitInfo.collider.gameObject.layer;
+
+            if (layer == Layer.Player)
+            {
+                return;
+            }
+
             obj.transform.position = hitInfo.point;
+
             if (nextData.followRotate)
             {
                 var direction = nextData.velocity;
                 obj.transform.rotation = Quaternion.LookRotation(direction, obj.transform.up);
             }
 
-            var layer = hitInfo.collider.gameObject.layer;
             switch (layer)
             {
                 case Layer.Enemy:
@@ -164,6 +171,15 @@ public class ParabolaCurveManager : Singleton<ParabolaCurveManager>
                     }
                 }
                     break;
+            }
+
+            // 产生弹痕
+            if (layer != Layer.Player && layer != Layer.UI && layer != Layer.Weapon)
+            {
+                var bulletMarks = BulletMarksPool.Instance.Get();
+                bulletMarks.transform.SetParent(null);
+                bulletMarks.transform.position = hitInfo.point + hitInfo.normal * 0.01f;
+                bulletMarks.transform.rotation = Quaternion.LookRotation(hitInfo.normal);
             }
 
             Remove(nextData.uid);

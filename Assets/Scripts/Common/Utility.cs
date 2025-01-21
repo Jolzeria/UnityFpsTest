@@ -12,7 +12,8 @@ public enum MyLayer
     UI = 1 << 5,
     Environment = 1 << 6,
     Enemy = 1 << 7,
-    Player = 1 << 8
+    Player = 1 << 8,
+    Weapon = 1 << 9
 }
 
 public class LayerManager
@@ -25,6 +26,7 @@ public class LayerManager
     public const int Environment = (int)MyLayer.Environment;
     public const int Enemy = (int)MyLayer.Enemy;
     public const int Player = (int)MyLayer.Player;
+    public const int Weapon = (int)MyLayer.Weapon;
 }
 
 public class Layer
@@ -37,6 +39,7 @@ public class Layer
     public const int Environment = 6;
     public const int Enemy = 7;
     public const int Player = 8;
+    public const int Weapon = 9;
 }
 
 public static class Utility

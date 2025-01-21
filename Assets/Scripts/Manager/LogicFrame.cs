@@ -13,6 +13,7 @@ public class LogicFrame : MonoBehaviour
         BulletPool.Instance.SetParent(transform.Find("BulletPool"));
         RoundBulletPool.Instance.SetParent(transform.Find("RoundBulletPool"));
         DamageTextPool.Instance.SetParent(transform.Find("DamageTextPool"));
+        BulletMarksPool.Instance.SetParent(transform.Find("BulletMarksPool"));
         GunPool.Instance.SetParent(transform.Find("GunPool"));
         DamageTextManager.Instance.SetCanvas(transform.Find("DamageCanvas"));
         CharacterManager.Instance.Init();
@@ -30,6 +31,7 @@ public class LogicFrame : MonoBehaviour
         BulletPool.Instance.UnInit();
         RoundBulletPool.Instance.UnInit();
         DamageTextPool.Instance.UnInit();
+        BulletMarksPool.Instance.UnInit();
         DamageManager.Instance.UnInit();
         DamageTextManager.Instance.UnInit();
         CharacterManager.Instance.UnInit();
