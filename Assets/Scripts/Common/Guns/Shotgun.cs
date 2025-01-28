@@ -5,11 +5,17 @@ using UnityEngine;
 
 public class Shotgun : BaseGun
 {
-    public float speed = 10f;
+    public float speed = 100f;
     public float gravity = 0f;
     public bool followRotate = false;
     public float shootInterval = 2f;
     public float duration = 5f;
+
+    public int bulletCount = 20;
+    public int sectorCount = 4;
+    public float rotationConstraint = 1f;
+    public float normalDistributionFactor = 1f;
+    public float radius = 50f;
 
     protected override void Init()
     {
@@ -93,9 +99,11 @@ public class Shotgun : BaseGun
         float realDuration;
         Vector3 direction;
 
-        for (int i = 0; i < 20; i++)
+        var randomEndPos = GetEndPoint(bulletCount, sectorCount, rotationConstraint, normalDistributionFactor, radius);
+
+        foreach (var endPos in randomEndPos)
         {
-            if (Physics.Raycast(mainCameraTrans.position, mainCameraTrans.forward + GetOffsetCoord(), out var hitInfo,
+            if (Physics.Raycast(mainCameraTrans.position, endPos - mainCameraTrans.position, out var hitInfo,
                 speed * duration, LayerManager.Environment | LayerManager.Enemy))
             {
                 direction = hitInfo.point - muzzle.transform.position;
@@ -103,8 +111,7 @@ public class Shotgun : BaseGun
             }
             else
             {
-                var endPoint = mainCameraTrans.position + mainCameraTrans.forward * speed * duration;
-                direction = endPoint - muzzle.transform.position;
+                direction = endPos - muzzle.transform.position;
                 realDuration = duration * (direction.magnitude / (speed * duration));
             }
 
@@ -123,6 +130,37 @@ public class Shotgun : BaseGun
 
             ParabolaCurveManager.Instance.Add(bulletCreateData, bullet);
         }
+
+        // for (int i = 0; i < 20; i++)
+        // {
+        //     if (Physics.Raycast(mainCameraTrans.position, mainCameraTrans.forward + GetOffsetCoord(), out var hitInfo,
+        //         speed * duration, LayerManager.Environment | LayerManager.Enemy))
+        //     {
+        //         direction = hitInfo.point - muzzle.transform.position;
+        //         realDuration = duration;
+        //     }
+        //     else
+        //     {
+        //         var endPoint = mainCameraTrans.position + mainCameraTrans.forward * speed * duration;
+        //         direction = endPoint - muzzle.transform.position;
+        //         realDuration = duration * (direction.magnitude / (speed * duration));
+        //     }
+        //
+        //     var bullet = CreateBullet();
+        //     var bulletCreateData = new ParabolaCurveCreateData
+        //     {
+        //         uid = bullet.GetInstanceID(),
+        //         startPoint = muzzle.transform.position,
+        //         startRotation = muzzle.transform.rotation,
+        //         speed = speed,
+        //         direction = direction.normalized,
+        //         followRotate = followRotate,
+        //         gravity = gravity,
+        //         duration = realDuration
+        //     };
+        //
+        //     ParabolaCurveManager.Instance.Add(bulletCreateData, bullet);
+        // }
     }
 
     private GameObject CreateBullet()
@@ -137,7 +175,7 @@ public class Shotgun : BaseGun
         return bullet;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// </summary>
     /// <returns>获取偏移坐标</returns>
     private Vector3 GetOffsetCoord()
@@ -183,5 +221,68 @@ public class Shotgun : BaseGun
 
         s = Mathf.Sqrt((-2.0f * Mathf.Log(s)) / s);
         return v1 * s;
+    }*/
+
+    /// <summary>
+    /// 返回随机位置后的终点坐标List
+    /// </summary>
+    /// <param name="vBulletCount">需要随机位置的子弹总数</param>
+    /// <param name="vSectorCount">需要随机的区块数</param>
+    /// <param name="vRotationConstraint">旋转约定系数(随机落点的扇形大小)</param>
+    /// <param name="vNormalDistributionFactor">正态分布因子</param>
+    /// <param name="vRadius">准心半径</param>
+    private List<Vector3> GetEndPoint(int vBulletCount, int vSectorCount, float vRotationConstraint,
+        float vNormalDistributionFactor, float vRadius)
+    {
+        var result = new List<Vector3>();
+
+        // 获取摄像机FOV（垂直角度），计算出屏幕到摄像机的真实距离
+        var m_Camera = Camera.main;
+        var cameraPos = m_Camera.transform.position;
+        var verticalDegree = m_Camera.fieldOfView;
+        var screenDepth = (float) Screen.height / 2f / Mathf.Tan(verticalDegree / 2f * Mathf.Deg2Rad);
+
+        // 基础数据
+        var bulletMaxDistance = speed * duration;
+        var endPos = m_Camera.transform.position + m_Camera.transform.forward * bulletMaxDistance;
+
+        // 分几组循环
+        var loopGroupSize = vBulletCount / vSectorCount + 1;
+
+        for (int j = 0; j < loopGroupSize; j++)
+        {
+            // 圆内第一个真随机点的角度
+            var angleFirst = Random.Range(0.0f, 360.0f);
+
+            // 当前组的循环次数
+            var curLoopSize = j == loopGroupSize - 1 ? vBulletCount % vSectorCount : vSectorCount;
+
+            // 根据第一个点的角度进行随机
+            for (int i = 0; i < curLoopSize; i++)
+            {
+                var angleMin = angleFirst + 360.0f / vSectorCount * i - 180.0f * (1 - vRotationConstraint);
+                var angleMax = angleFirst + 360.0f / vSectorCount * i + 180.0f * (1 - vRotationConstraint);
+                var angleRandom = Random.Range(angleMin, angleMax);
+
+                var randomResult = Random.Range(0.0f, 1.0f);
+                // 准心随机半径-像素值
+                var radiusRandom = vRadius * Mathf.Pow(randomResult, vNormalDistributionFactor);
+                // 从镜头半径放大到终点半径
+                var distance = Vector3.Distance(endPos, cameraPos);
+                radiusRandom = radiusRandom / screenDepth * distance;
+
+                // 最终的命中点偏移坐标
+                var offset = new Vector3(Mathf.Cos(angleRandom * Mathf.Deg2Rad) * radiusRandom,
+                    Mathf.Sin(angleRandom * Mathf.Deg2Rad) * radiusRandom, 0);
+                // 将偏移坐标转向摄像机正面方向
+                offset = Quaternion.LookRotation(m_Camera.transform.forward) * offset;
+                // 计算最后子弹终点的坐标
+                var finalPosition = m_Camera.transform.position + m_Camera.transform.forward * bulletMaxDistance + offset;
+
+                result.Add(finalPosition);
+            }
+        }
+
+        return result;
     }
 }

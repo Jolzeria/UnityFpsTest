@@ -196,7 +196,11 @@ public class ParabolaCurveManager : Singleton<ParabolaCurveManager>
 
     private void ReleaseBullet(GameObject bullet)
     {
-        BulletPool.Instance.Release(bullet);
+        var objTag = bullet.tag;
+        if (objTag == "Bullet")
+            BulletPool.Instance.Release(bullet);
+        else if (objTag == "RoundBullet")
+            RoundBulletPool.Instance.Release(bullet);
     }
 
     private bool IsBounding(ParabolaCurveUpdateData curData, ParabolaCurveUpdateData nextData, out RaycastHit hitInfo)
