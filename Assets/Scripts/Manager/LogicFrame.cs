@@ -16,6 +16,7 @@ public class LogicFrame : MonoBehaviour
         BulletMarksPool.Instance.SetParent(transform.Find("BulletMarksPool"));
         GunPool.Instance.SetParent(transform.Find("GunPool"));
         DamageTextManager.Instance.SetCanvas(transform.Find("DamageCanvas"));
+        ScoreManager.Instance.SetParent(transform.Find("2DCanvas/Score"));
         CharacterManager.Instance.Init();
         
         FindInstance();
@@ -37,6 +38,7 @@ public class LogicFrame : MonoBehaviour
         CharacterManager.Instance.UnInit();
         GunPool.Instance.UnInit();
         InstanceManager.Instance.UnInit();
+        ScoreManager.Instance.UnInit();
         
         EventHandler.UnInit();
     }

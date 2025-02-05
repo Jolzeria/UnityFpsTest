@@ -35,6 +35,53 @@ public class BaseGun : MonoBehaviour
     {
     }
 
+    protected void Shoot()
+    {
+        // 换弹匣时不能射击
+        if (isLoading)
+        {
+            Debug.Log("正在换弹");
+            return;
+        }
+
+        // 没子弹了
+        if (CurAmmo == 0 && TotalAmmo == 0)
+        {
+            Debug.Log("没子弹了");
+            return;
+        }
+
+        // 换弹匣
+        if (CurAmmo == 0 && TotalAmmo > 0)
+        {
+            isLoading = true;
+
+            var reloadAmmoNum = MagazineSize;
+            if (TotalAmmo < MagazineSize)
+                reloadAmmoNum = TotalAmmo;
+            CurAmmo = reloadAmmoNum;
+            equippedUnit.AddAttrValue(AttributeType.CurAmmo, reloadAmmoNum);
+            TotalAmmo -= reloadAmmoNum;
+            equippedUnit.AddAttrValue(AttributeType.TotalAmmo, -reloadAmmoNum);
+            Debug.Log("换子弹");
+
+            isLoading = false;
+            return;
+        }
+
+        CurAmmo -= 1f;
+        equippedUnit.AddAttrValue(AttributeType.CurAmmo, -1);
+        
+        // 修改分数
+        ScoreManager.Instance.Score1Add(1);
+
+        ShootBullet();
+    }
+
+    protected virtual void ShootBullet()
+    {
+    }
+
     public void EquipWeapon(BeUnit beUnit)
     {
         equippedUnit = beUnit;

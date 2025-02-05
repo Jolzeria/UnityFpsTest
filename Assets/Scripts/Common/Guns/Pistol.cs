@@ -42,51 +42,9 @@ public class Pistol : BaseGun
         }
     }
 
-    private void Shoot()
+    protected override void ShootBullet()
     {
-        //var rb = bullet.transform.SafeAddComponent<Rigidbody>();
-        //rb.useGravity = false;
-        //rb.angularDrag = 0;
-
-        //// 子弹回收后再使用，力无限叠加
-        //float forwardSpeed = Vector3.Dot(rb.velocity, bullet.transform.forward);
-        //if (forwardSpeed == 0)
-        //    rb.AddForce(bullet.transform.forward * 2000f);
-        
-        // 换弹匣时不能射击
-        if (isLoading)
-        {
-            Debug.Log("正在换弹");
-            return;
-        }
-
-        // 没子弹了
-        if (CurAmmo == 0 && TotalAmmo == 0)
-        {
-            Debug.Log("没子弹了");
-            return;
-        }
-        
-        // 换弹匣
-        if (CurAmmo == 0 && TotalAmmo > 0)
-        {
-            isLoading = true;
-            
-            var reloadAmmoNum = MagazineSize;
-            if (TotalAmmo < MagazineSize)
-                reloadAmmoNum = TotalAmmo;
-            CurAmmo = reloadAmmoNum;
-            equippedUnit.AddAttrValue(AttributeType.CurAmmo, reloadAmmoNum);
-            TotalAmmo -= reloadAmmoNum;
-            equippedUnit.AddAttrValue(AttributeType.TotalAmmo, -reloadAmmoNum);
-            Debug.Log("换子弹");
-
-            isLoading = false;
-            return;
-        }
-
-        CurAmmo -= 1f;
-        equippedUnit.AddAttrValue(AttributeType.CurAmmo, -1);
+        base.ShootBullet();
 
         var mainCameraTrans = Camera.main.transform;
         float realDuration;

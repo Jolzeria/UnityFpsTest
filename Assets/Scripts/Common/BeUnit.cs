@@ -56,9 +56,15 @@ public class BeUnit : MonoBehaviour
         if (Mathf.Abs(addHp) >= curHp)
         {
             addHp = -curHp;
+            
+            // 击杀获得分数
+            ScoreManager.Instance.Score3Add(1);
             Debug.Log("击败敌人");
         }
 
+        // 击中获得分数
+        ScoreManager.Instance.Score2Add(1);
+        
         damageInfo.receiver.AddAttrValue(AttributeType.CurHp, addHp);
         Debug.Log("receiver CurHp:" + damageInfo.receiver.GetAttrValue(AttributeType.CurHp));
 
