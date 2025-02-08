@@ -51,11 +51,11 @@ public class Move : MonoBehaviour
         var horizontal = Input.GetAxisRaw("Horizontal");
         var vertical = Input.GetAxisRaw("Vertical");
 
-        /*// 转向摄像机朝向的方向
+        // 转向摄像机朝向的方向
         var cameraForward = Camera.main.transform.forward;
         cameraForward.y = 0;
         cameraForward.Normalize();
-        root.localRotation = Quaternion.Slerp(root.localRotation, Quaternion.LookRotation(cameraForward), 10f * Time.fixedDeltaTime);*/
+        root.localRotation = Quaternion.Slerp(root.localRotation, Quaternion.LookRotation(cameraForward), 10f * Time.fixedDeltaTime);
         
         // 合成移动方向
         var direction = new Vector3(horizontal, 0, vertical);

@@ -33,7 +33,7 @@ public class ThirdPerson : MonoBehaviour
 
     private void Update()
     {
-        /*// 隐藏鼠标光标
+        // 隐藏鼠标光标
         if (!m_isAlt)
         {
             Cursor.visible = false;
@@ -52,7 +52,7 @@ public class ThirdPerson : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             m_isAlt = false;
-        }*/
+        }
     }
 
     private void FixedUpdate()
@@ -80,15 +80,7 @@ public class ThirdPerson : MonoBehaviour
 
     private void Rotate(float horizontal, float vertical)
     {
-        if (Input.GetMouseButton(1))
-        {
-            //transform.rotation = Quaternion.Euler(oriRotation.x, oriRotation.y + mouseX, oriRotation.z);
-            m_Yaw += horizontal;
-            // pitch向下时值增大，相反
-            m_Pitch -= vertical;
-            m_Pitch = Mathf.Clamp(m_Pitch, -70, 70);
-        }
-        /*if (!m_isAlt)
+        /*if (Input.GetMouseButton(1))
         {
             //transform.rotation = Quaternion.Euler(oriRotation.x, oriRotation.y + mouseX, oriRotation.z);
             m_Yaw += horizontal;
@@ -96,6 +88,14 @@ public class ThirdPerson : MonoBehaviour
             m_Pitch -= vertical;
             m_Pitch = Mathf.Clamp(m_Pitch, -70, 70);
         }*/
+        if (!m_isAlt)
+        {
+            //transform.rotation = Quaternion.Euler(oriRotation.x, oriRotation.y + mouseX, oriRotation.z);
+            m_Yaw += horizontal;
+            // pitch向下时值增大，相反
+            m_Pitch -= vertical;
+            m_Pitch = Mathf.Clamp(m_Pitch, -70, 70);
+        }
         // 先将当前物体坐标系转向世界坐标系z轴正方向
         // 再绕 Z 轴旋转 0 角度，绕 X 轴旋转 m_Pitch 角度，绕 Y 轴旋转 m_Yaw 角度
         transform.rotation = charaRotation * (Quaternion.Euler(m_Pitch, m_Yaw, 0) * Quaternion.LookRotation(Vector3.forward));
