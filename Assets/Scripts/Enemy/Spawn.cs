@@ -4,14 +4,15 @@ using UnityEngine;
 public enum MoveType
 {
     MoveX,
-    MoveZ
+    MoveZ,
+    MoveXHalfRound
 }
 
 public class Spawn : MonoBehaviour
 {
     private void Start()
     {
-        CreateEnemy(MoveType.MoveZ);
+        CreateEnemy(MoveType.MoveXHalfRound);
     }
 
     private void CreateEnemy(MoveType moveType)
@@ -32,6 +33,9 @@ public class Spawn : MonoBehaviour
                 break;
             case MoveType.MoveZ:
                 obj.AddComponent<MoveZ>();
+                break;
+            case MoveType.MoveXHalfRound:
+                obj.AddComponent<MoveXHalfRound>();
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(moveType), moveType, null);
