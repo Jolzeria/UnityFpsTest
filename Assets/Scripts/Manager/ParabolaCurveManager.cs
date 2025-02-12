@@ -180,6 +180,8 @@ public class ParabolaCurveManager : Singleton<ParabolaCurveManager>
                 bulletMarks.transform.SetParent(null);
                 bulletMarks.transform.position = hitInfo.point + hitInfo.normal * 0.01f;
                 bulletMarks.transform.rotation = Quaternion.LookRotation(hitInfo.normal);
+                
+                bulletMarks.transform.SetParent(hitInfo.transform);
             }
 
             Remove(nextData.uid);
