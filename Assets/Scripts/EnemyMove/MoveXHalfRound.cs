@@ -53,7 +53,7 @@ public class MoveXHalfRound : MonoBehaviour
             y = Mathf.Abs(Mathf.Sin((Time.time - startTime) * frequency)) * amplitude;
         }
         transform.position = new Vector3(x, y, transform.position.z);
-        transform.rotation = Quaternion.LookRotation(moveDir);
+        // transform.rotation = Quaternion.LookRotation(moveDir);
 
         collisionInterval -= Time.fixedDeltaTime;
         if (collisionInterval <= 0)

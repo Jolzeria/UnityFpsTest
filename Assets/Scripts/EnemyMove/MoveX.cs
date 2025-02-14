@@ -32,7 +32,7 @@ public class MoveX : MonoBehaviour
     private void FixedUpdate()
     {
         transform.Translate(moveDir * speed * Time.fixedDeltaTime, Space.World);
-        transform.rotation = Quaternion.LookRotation(moveDir);
+        // transform.rotation = Quaternion.LookRotation(moveDir);
         
         collisionInterval -= Time.fixedDeltaTime;
         if (collisionInterval <= 0)
