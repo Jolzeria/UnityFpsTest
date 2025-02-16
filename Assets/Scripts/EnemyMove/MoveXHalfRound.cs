@@ -18,16 +18,18 @@ public class MoveXHalfRound : BaseMove
 
     protected override void MyFixedUpdate()
     {
+        base.MyFixedUpdate();
+        
         float x;
         float y;
         if (moveDir.x == 1f)
         {
-            x = transform.position.x + speed * Time.deltaTime;
+            x = transform.position.x + speed * Time.fixedDeltaTime;
             y = Mathf.Abs(Mathf.Sin((Time.time - startTime) * frequency)) * amplitude;
         }
         else
         {
-            x = transform.position.x - speed * Time.deltaTime;
+            x = transform.position.x - speed * Time.fixedDeltaTime;
             y = Mathf.Abs(Mathf.Sin((Time.time - startTime) * frequency)) * amplitude;
         }
         transform.position = new Vector3(x, y, transform.position.z);

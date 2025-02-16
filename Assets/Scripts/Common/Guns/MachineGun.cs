@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MachineGun : BaseGun
 {
-    public float speed = 100f;
+    public float speed = 200f;
     public float gravity = 0f;
     public bool followRotate = false;
     public float shootInterval = 0.05f;
@@ -15,7 +15,7 @@ public class MachineGun : BaseGun
     {
         base.Init();
 
-        ATK = 10;
+        ATK = 8;
         CurAmmo = 30;
         MagazineSize = 30;
         TotalAmmo = 120;

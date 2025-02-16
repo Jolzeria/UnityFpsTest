@@ -15,7 +15,6 @@ public class Spawn : MonoBehaviour
     {
         for (int i = 0; i < 10; i++)
         {
-            
             CreateEnemy(MoveType.MoveXHalfRound);
         }
     }
@@ -60,12 +59,12 @@ public class Spawn : MonoBehaviour
     {
         var cubePosition = transform.position;
         var cubeScale = transform.localScale;
-        
+
         // 计算顶部面中心
         var topY = cubePosition.y + (cubeScale.y / 2f); // 顶部Y坐标
         var randomX = Random.Range(-cubeScale.x / 2f, cubeScale.x / 2f);
         var randomZ = Random.Range(-cubeScale.z / 2f, cubeScale.z / 2f);
-        
+
         // 转换为世界坐标
         var randomPoint = cubePosition + new Vector3(randomX, cubeScale.y / 2f, randomZ);
         return randomPoint;

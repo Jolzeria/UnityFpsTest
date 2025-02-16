@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Pistol : BaseGun
 {
-    public float speed = 100f;
+    public float speed = 200f;
     public float gravity = 0f;
     public bool followRotate = false;
     public float shootInterval = 0.5f;
@@ -15,7 +15,7 @@ public class Pistol : BaseGun
     {
         base.Init();
 
-        ATK = 20;
+        ATK = 10;
         CurAmmo = 7;
         MagazineSize = 7;
         TotalAmmo = 42;

@@ -6,13 +6,13 @@ public class EnemyAttribute : BaseAttribute
         switch (attr)
         {
             case AttributeType.CurHp:
-                return 100;
+                return 30;
             case AttributeType.MaxHp:
-                return 100;
+                return 30;
             case AttributeType.ATK:
                 return 1;
             case AttributeType.DEF:
-                return 5;
+                return 0;
             default:
                 return 0;
         }
