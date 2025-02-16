@@ -145,7 +145,7 @@ public class ParabolaCurveManager : Singleton<ParabolaCurveManager>
         {
             var layer = hitInfo.collider.gameObject.layer;
 
-            if (layer == Layer.Player)
+            if (layer == Layer.Player || layer == Layer.Boundary)
             {
                 return;
             }
