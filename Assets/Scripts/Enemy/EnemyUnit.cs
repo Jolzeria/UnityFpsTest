@@ -58,7 +58,7 @@ public class EnemyUnit : BeUnit
             Debug.Log("击败敌人");
             
             // 自毁
-            Destroy(gameObject);
+            TargetSpawnManager.Instance.Release(gameObject);
         }
 
         // 击中获得分数

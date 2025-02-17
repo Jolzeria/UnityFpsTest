@@ -18,6 +18,7 @@ public class LogicFrame : MonoBehaviour
         DamageTextManager.Instance.SetCanvas(transform.Find("DamageCanvas"));
         ScoreManager.Instance.SetParent(transform.Find("2DCanvas/Score"));
         CharacterManager.Instance.Init();
+        TargetSpawnManager.Instance.SetParent(GameObject.Find("TrainCenter/EnemySpawn").transform);
         
         FindInstance();
     }
@@ -39,6 +40,7 @@ public class LogicFrame : MonoBehaviour
         GunPool.Instance.UnInit();
         InstanceManager.Instance.UnInit();
         ScoreManager.Instance.UnInit();
+        TargetSpawnManager.Instance.UnInit();
         
         EventHandler.UnInit();
     }
@@ -48,6 +50,7 @@ public class LogicFrame : MonoBehaviour
         ParabolaCurveManager.Instance.Update();
         DamageManager.Instance.Update();
         DamageTextManager.Instance.Update();
+        LevelManager.Instance.Update();
     }
 
     private void FixedUpdate()
@@ -59,5 +62,6 @@ public class LogicFrame : MonoBehaviour
     {
         InstanceManager.Instance.Add(InstanceType.Sight, transform.Find("2DCanvas/sight"));
         InstanceManager.Instance.Add(InstanceType.Scope, transform.Find("2DCanvas/Scope"));
+        InstanceManager.Instance.Add(InstanceType.GameInfo, transform.Find("2DCanvas/GameInfo"));
     }
 }

@@ -39,8 +39,11 @@ public class ScoreManager : Singleton<ScoreManager>
     public void ResetScore()
     {
         score1Count = 0;
+        m_Score1Text.text = score1Count.ToString();
         score2Count = 0;
+        m_Score2Text.text = score2Count.ToString();
         score3Count = 0;
+        m_Score3Text.text = score3Count.ToString();
     }
 
     public void Score1Add(int count)

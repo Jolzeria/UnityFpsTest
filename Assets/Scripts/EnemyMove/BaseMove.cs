@@ -16,7 +16,7 @@ public class BaseMove : MonoBehaviour
     //移动方向
     protected Vector3 moveDir;
     
-    protected float speed;
+    public float speed;
 
     private void Start()
     {
