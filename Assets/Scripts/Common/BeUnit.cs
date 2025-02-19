@@ -7,7 +7,7 @@ public class BeUnit : MonoBehaviour
     protected BaseAttribute attribute;
     public BeUnit OriginalCreator { get; set; }
 
-    private void Start()
+    private void Awake()
     {
         Init();
     }

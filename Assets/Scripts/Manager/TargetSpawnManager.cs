@@ -42,12 +42,12 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
         spawnRangeTrans = parent;
     }
 
-    public void Add(MoveType moveType, SpeedLevel speedLevel)
+    public void Add(MoveType moveType, SpeedLevel speedLevel, int score)
     {
         if (targetList == null || targetList.Count >= 20)
             return;
         
-        var obj = CreateEnemy(moveType, speedLevel);
+        var obj = CreateEnemy(moveType, speedLevel, score);
         targetList?.Add(obj);
     }
     
@@ -77,12 +77,16 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
     /// </summary>
     /// <param name="moveType">移动路线类型</param>
     /// <param name="speedLevel">移动速度</param>
+    /// <param name="score">击杀获得分数</param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public GameObject CreateEnemy(MoveType moveType, SpeedLevel speedLevel)
+    public GameObject CreateEnemy(MoveType moveType, SpeedLevel speedLevel, int score)
     {
         var prefab = Resources.Load<GameObject>("Target");
         var obj = GameObject.Instantiate(prefab);
         obj.SetActive(true);
+        
+        // 设置分数
+        obj.GetComponent<BeUnit>().SetAttrValue(AttributeType.Score, (float)score);
 
         var randomPoint = GetRandomPoint();
         obj.transform.position = randomPoint;

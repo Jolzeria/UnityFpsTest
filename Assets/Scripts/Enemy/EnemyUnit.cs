@@ -54,7 +54,7 @@ public class EnemyUnit : BeUnit
             addHp = -curHp;
             
             // 击杀获得分数
-            ScoreManager.Instance.Score3Add(1);
+            ScoreManager.Instance.Score3Add((int)damageInfo.receiver.GetAttrValue(AttributeType.Score));
             Debug.Log("击败敌人");
             
             // 自毁

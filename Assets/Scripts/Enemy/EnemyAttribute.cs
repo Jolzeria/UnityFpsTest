@@ -13,6 +13,8 @@ public class EnemyAttribute : BaseAttribute
                 return 1;
             case AttributeType.DEF:
                 return 0;
+            case AttributeType.Score:
+                return 0;
             default:
                 return 0;
         }

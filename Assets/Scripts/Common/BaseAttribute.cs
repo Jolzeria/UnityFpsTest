@@ -14,6 +14,7 @@ public enum AttributeType
     MoveSpeedRate,
     ATK,
     DEF,
+    Score,
     Max
 }
 

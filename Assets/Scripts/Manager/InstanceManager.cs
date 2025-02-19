@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public enum InstanceType
 {
     None,
+    TwoDCanvas,
     Sight,
     Scope,
     Score,
