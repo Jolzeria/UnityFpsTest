@@ -16,7 +16,6 @@ public class LogicFrame : MonoBehaviour
         BulletMarksPool.Instance.SetParent(transform.Find("BulletMarksPool"));
         GunPool.Instance.SetParent(transform.Find("GunPool"));
         DamageTextManager.Instance.SetCanvas(transform.Find("DamageCanvas"));
-        ScoreManager.Instance.SetParent(transform.Find("2DCanvas/Score"));
         CharacterManager.Instance.Init();
         TargetSpawnManager.Instance.SetParent(GameObject.Find("TrainCenter/EnemySpawn").transform);
         
@@ -62,6 +61,8 @@ public class LogicFrame : MonoBehaviour
     {
         InstanceManager.Instance.Add(InstanceType.Sight, transform.Find("2DCanvas/sight"));
         InstanceManager.Instance.Add(InstanceType.Scope, transform.Find("2DCanvas/Scope"));
-        InstanceManager.Instance.Add(InstanceType.GameInfo, transform.Find("2DCanvas/GameInfo"));
+        InstanceManager.Instance.Add(InstanceType.Score, transform.Find("2DCanvas/Score"));
+        InstanceManager.Instance.Add(InstanceType.LevelInfo, transform.Find("2DCanvas/LevelInfo"));
+        InstanceManager.Instance.Add(InstanceType.GameoverInfo, transform.Find("2DCanvas/GameoverInfo"));
     }
 }

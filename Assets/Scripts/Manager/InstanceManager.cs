@@ -10,7 +10,9 @@ public enum InstanceType
     None,
     Sight,
     Scope,
-    GameInfo,
+    Score,
+    LevelInfo,
+    GameoverInfo,
     Max
 }
 

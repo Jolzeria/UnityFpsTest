@@ -10,6 +10,12 @@ public class GlobalHotkey : MonoBehaviour
         {
             LevelManager.Instance.StartGame();
         }
+        
+        // 暂停游戏
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            LevelManager.Instance.StopGame();
+        }
 
         // 降低难度
         if (Input.GetKeyDown(KeyCode.F3))

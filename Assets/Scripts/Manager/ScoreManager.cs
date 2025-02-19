@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ScoreManager : Singleton<ScoreManager>
 {
-    private Transform m_CanvasTransform;
+    private Transform m_ScoreTransform;
     private TMP_Text m_Score1Text;
     private int score1Count;
     private TMP_Text m_Score2Text;
@@ -17,6 +17,11 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         base.Init();
 
+        m_ScoreTransform = InstanceManager.Instance.Get(InstanceType.Score);
+        m_Score1Text = m_ScoreTransform.Find("score1").GetComponent<TMP_Text>();
+        m_Score2Text = m_ScoreTransform.Find("score2").GetComponent<TMP_Text>();
+        m_Score3Text = m_ScoreTransform.Find("score3").GetComponent<TMP_Text>();
+        
         score1Count = 0;
         score2Count = 0;
         score3Count = 0;
@@ -25,15 +30,6 @@ public class ScoreManager : Singleton<ScoreManager>
     public override void UnInit()
     {
         base.UnInit();
-    }
-
-    public void SetParent(Transform parent)
-    {
-        m_CanvasTransform = parent;
-
-        m_Score1Text = m_CanvasTransform.Find("score1").GetComponent<TMP_Text>();
-        m_Score2Text = m_CanvasTransform.Find("score2").GetComponent<TMP_Text>();
-        m_Score3Text = m_CanvasTransform.Find("score3").GetComponent<TMP_Text>();
     }
 
     public void ResetScore()
@@ -77,5 +73,10 @@ public class ScoreManager : Singleton<ScoreManager>
 
         score3Count += count;
         m_Score3Text.text = score3Count.ToString();
+    }
+
+    public int GetScore()
+    {
+        return score3Count;
     }
 }
