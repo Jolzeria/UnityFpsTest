@@ -26,7 +26,10 @@ public class LevelManager : Singleton<LevelManager>
     private Transform helpTrans;
 
     // 游戏总时长
-    private float gameRunTime;
+    private float gameRunTimer;
+    
+    // 显示游戏剩余时间
+    private Transform remainTime;
 
     public override void Init()
     {
@@ -46,6 +49,8 @@ public class LevelManager : Singleton<LevelManager>
         gameoverInfoText = gameoverInfo.GetComponent<TMP_Text>();
 
         helpTrans = InstanceManager.Instance.Get(InstanceType.TwoDCanvas).Find("HelpText");
+        
+        remainTime = InstanceManager.Instance.Get(InstanceType.TwoDCanvas).Find("RemainTime");
     }
 
     public override void UnInit()
@@ -84,9 +89,11 @@ public class LevelManager : Singleton<LevelManager>
         // 判断游戏结束的逻辑
         if (gameStatus == 1)
         {
-            gameRunTime += Time.deltaTime;
+            gameRunTimer += Time.deltaTime;
+            var countDown = Mathf.FloorToInt(31f - gameRunTimer);
+            remainTime.GetComponent<TMP_Text>().text = countDown.ToString();
 
-            if (gameRunTime >= 30f)
+            if (gameRunTimer >= 30f)
             {
                 GameOver();
             }
@@ -141,20 +148,21 @@ public class LevelManager : Singleton<LevelManager>
 
     public void GameOver()
     {
-        gameoverInfoText.text = $"游戏结束！\n得分：{ScoreManager.Instance.GetScore()}";
+        gameoverInfoText.text = $"游戏结束\n得分：{ScoreManager.Instance.GetScore()}";
         ShowGameoverText();
 
         gameStatus = 0;
         ScoreManager.Instance.ResetScore();
         TargetSpawnManager.Instance.Reset();
 
-        gameRunTime = 0f;
+        gameRunTimer = 0f;
     }
 
     private void ShowHelpText()
     {
         helpTrans.gameObject.SetActive(true);
         scoreTranform.gameObject.SetActive(false);
+        remainTime.gameObject.SetActive(false);
         gameoverInfo.gameObject.SetActive(false);
     }
 
@@ -162,6 +170,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         helpTrans.gameObject.SetActive(false);
         scoreTranform.gameObject.SetActive(true);
+        remainTime.gameObject.SetActive(true);
         gameoverInfo.gameObject.SetActive(false);
     }
 
@@ -169,6 +178,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         helpTrans.gameObject.SetActive(false);
         scoreTranform.gameObject.SetActive(false);
+        remainTime.gameObject.SetActive(false);
         gameoverInfo.gameObject.SetActive(true);
     }
 
