@@ -8,7 +8,7 @@ public class Shotgun : BaseGun
     public float speed = 200f;
     public float gravity = 0f;
     public bool followRotate = false;
-    public float shootInterval = 2f;
+    public float shootInterval = 1f;
     public float duration = 5f;
 
     public int bulletCount = 20;
@@ -37,16 +37,13 @@ public class Shotgun : BaseGun
         {
             if (shootTimer <= 0)
             {
-                shootTimer += shootInterval;
                 Shoot();
+                shootTimer = shootInterval;
             }
+        }
 
+        if (shootTimer >= 0)
             shootTimer -= Time.deltaTime;
-        }
-        else
-        {
-            shootTimer = 0;
-        }
     }
 
     protected override void ShootBullet()

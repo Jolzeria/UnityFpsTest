@@ -8,6 +8,7 @@ public class SniperRifle : BaseGun
     public float speed = 300f;
     public float gravity = 0f;
     public bool followRotate = false;
+    public float shootInterval = 2f;
     public float duration = 15f;
 
     protected override void Init()
@@ -25,22 +26,30 @@ public class SniperRifle : BaseGun
     {
         base.OnUpdate();
         
-        // 发射子弹
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Shoot();
-        }
-
         // 开镜
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             ThirdPerson.OpenScope();
         }
 
+        // 关镜
         if (Input.GetKeyUp((KeyCode.Mouse1)))
         {
             ThirdPerson.CloseScope();
         }
+        
+        // 发射子弹
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if (shootTimer <= 0)
+            {
+                Shoot();
+                shootTimer = shootInterval;
+            }
+        }
+
+        if (shootTimer >= 0)
+            shootTimer -= Time.deltaTime;
     }
 
     protected override void ShootBullet()

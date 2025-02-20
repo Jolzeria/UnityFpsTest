@@ -6,6 +6,7 @@ public class BaseGun : MonoBehaviour
 {
     protected Transform muzzle;
     protected float shootTimer;
+    // 装备的对象
     protected BeUnit equippedUnit;
     protected bool isLoading = false;
 

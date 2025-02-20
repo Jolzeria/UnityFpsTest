@@ -31,15 +31,13 @@ public class MachineGun : BaseGun
         {
             if (shootTimer <= 0)
             {
-                shootTimer += shootInterval;
                 Shoot();
+                shootTimer = shootInterval;
             }
+        }
+
+        if (shootTimer >= 0)
             shootTimer -= Time.deltaTime;
-        }
-        else
-        {
-            shootTimer = 0;
-        }
     }
 
     protected override void ShootBullet()
