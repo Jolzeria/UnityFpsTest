@@ -14,6 +14,7 @@ public enum InstanceType
     Score,
     LevelInfo,
     GameoverInfo,
+    LevelList,
     Max
 }
 

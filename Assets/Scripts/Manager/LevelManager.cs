@@ -30,6 +30,15 @@ public class LevelManager : Singleton<LevelManager>
     
     // 显示游戏剩余时间
     private Transform remainTime;
+    
+    // 所有的关卡信息
+    private Transform levelListTrans;
+    private Transform level1Trans;
+    private List<SpawnData> level1Datas;
+    private Transform level2Trans;
+    private List<SpawnData> level2Datas;
+    private Transform level3Trans;
+    private List<SpawnData> level3Datas;
 
     public override void Init()
     {
@@ -38,6 +47,7 @@ public class LevelManager : Singleton<LevelManager>
         level = 1;
         gameStatus = 0;
         lastCreateTime = 0f;
+        gameRunTimer = 0f;
         scoreTranform = InstanceManager.Instance.Get(InstanceType.Score);
 
         levelInfo = InstanceManager.Instance.Get(InstanceType.LevelInfo);
@@ -51,6 +61,10 @@ public class LevelManager : Singleton<LevelManager>
         helpTrans = InstanceManager.Instance.Get(InstanceType.TwoDCanvas).Find("HelpText");
         
         remainTime = InstanceManager.Instance.Get(InstanceType.TwoDCanvas).Find("RemainTime");
+        
+        levelListTrans = InstanceManager.Instance.Get(InstanceType.LevelList);
+        level1Trans = levelListTrans.Find("Level1");
+        ResetLevelDatas();
     }
 
     public override void UnInit()
@@ -60,21 +74,6 @@ public class LevelManager : Singleton<LevelManager>
 
     public void Update()
     {
-        // 生成靶子
-        if (gameStatus == 1 && Time.time - lastCreateTime > 1)
-        {
-            lastCreateTime = Time.time;
-
-            var position = new Vector3(0, 0, 13.4899998f);
-            var randomNum = Random.Range(1, 4);
-            var moveType = randomNum == 3 ? MoveType.MoveXHalfRound : MoveType.MoveStraight;
-            var moveDirection = randomNum == 2 ? MoveDirection.forward : MoveDirection.right;
-            var speedLevel = level == 1 ? SpeedLevel.Level1 : level == 2 ? SpeedLevel.Level2 : SpeedLevel.Level3;
-            var score = randomNum == 2 ? 1 : randomNum == 1 ? 2 : 3;
-
-            TargetSpawnManager.Instance.Add(position, moveType, moveDirection, speedLevel, score);
-        }
-
         // 控制难度信息等显示
         if (levelInfoShowStatus)
         {
@@ -88,10 +87,11 @@ public class LevelManager : Singleton<LevelManager>
             }
         }
 
-        // 判断游戏结束的逻辑
+        // 判断游戏结束的逻辑以及生成靶子
         if (gameStatus == 1)
         {
             gameRunTimer += Time.deltaTime;
+            CreateTarget();
             var countDown = Mathf.FloorToInt(31f - gameRunTimer);
             remainTime.GetComponent<TMP_Text>().text = countDown.ToString();
 
@@ -100,6 +100,46 @@ public class LevelManager : Singleton<LevelManager>
                 GameOver();
             }
         }
+    }
+
+    private void CreateTarget()
+    {
+        for (int i = level1Datas.Count - 1; i >= 0; i--)
+        {
+            if (level1Datas[i].spawnTime <= gameRunTimer)
+            {
+                var data = level1Datas[i];
+                var position = data.spawnPosition;
+                var moveType = data.moveType;
+                var moveDirection = data.moveDirection;
+                var speedLevel = data.speedLevel;
+                
+                // 计算分数
+                var score = 0;
+                if (moveType == MoveType.MoveStraight)
+                    score += 1;
+                if (moveType == MoveType.MoveXHalfRound)
+                    score += 2;
+                if (moveDirection == MoveDirection.forward || moveDirection == MoveDirection.back)
+                    score += 1;
+                if (moveDirection == MoveDirection.right || moveDirection == MoveDirection.left)
+                    score += 2;
+                if (speedLevel == SpeedLevel.Level1)
+                    score += 1;
+                if (speedLevel == SpeedLevel.Level2)
+                    score += 2;
+                if (speedLevel == SpeedLevel.Level3)
+                    score += 3;
+
+                TargetSpawnManager.Instance.Add(position, moveType, moveDirection, speedLevel, score);
+                level1Datas.Remove(level1Datas[i]);
+            }
+        }
+    }
+
+    private void ResetLevelDatas()
+    {
+        level1Datas = level1Trans.GetComponent<LevelEditor>().GetSpawnDatas();
     }
 
     public void StartGame()
@@ -146,6 +186,8 @@ public class LevelManager : Singleton<LevelManager>
         TargetSpawnManager.Instance.Reset();
         ShowCountdownText($"重置游戏");
         ShowHelpText();
+        
+        gameRunTimer = 0f;
     }
 
     public void GameOver()

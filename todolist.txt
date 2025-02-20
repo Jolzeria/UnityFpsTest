@@ -30,3 +30,7 @@ A*算法
 
 
 玩家发出子弹实体（挂载EntityUnit脚本，赋值OriginalCreator），实体监听命中事件，当触发命中事件时，通知DamageManager计算伤害
+
+增加游戏开始界面（新scene）
+ESC打开设置界面，显示F1等5个按钮
+增加地图编辑器，设计3个关卡
