@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class LogicFrame : MonoBehaviour
 {
+    public static bool isInit = false;
 
     private void Awake()
     {
@@ -20,6 +21,8 @@ public class LogicFrame : MonoBehaviour
         TargetSpawnManager.Instance.SetParent(GameObject.Find("TrainCenter/EnemySpawn").transform);
         
         FindInstance();
+
+        isInit = true;
     }
 
     private void Start()
@@ -37,9 +40,9 @@ public class LogicFrame : MonoBehaviour
         DamageTextManager.Instance.UnInit();
         CharacterManager.Instance.UnInit();
         GunPool.Instance.UnInit();
-        InstanceManager.Instance.UnInit();
         ScoreManager.Instance.UnInit();
         TargetSpawnManager.Instance.UnInit();
+        InstanceManager.Instance.UnInit();
         
         EventHandler.UnInit();
     }

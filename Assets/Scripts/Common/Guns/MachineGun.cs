@@ -18,8 +18,8 @@ public class MachineGun : BaseGun
         ATK = 8;
         CurAmmo = 30;
         MagazineSize = 30;
-        TotalAmmo = 120;
-        MaxAmmo = 120;
+        TotalAmmo = 99999;
+        MaxAmmo = 99999;
     }
 
     protected override void OnUpdate()

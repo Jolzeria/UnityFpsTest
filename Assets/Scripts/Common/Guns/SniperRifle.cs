@@ -17,8 +17,8 @@ public class SniperRifle : BaseGun
         ATK = 30;
         CurAmmo = 7;
         MagazineSize = 7;
-        TotalAmmo = 42;
-        MaxAmmo = 42;
+        TotalAmmo = 99999;
+        MaxAmmo = 99999;
     }
 
     protected override void OnUpdate()

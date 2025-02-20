@@ -24,8 +24,8 @@ public class Shotgun : BaseGun
         ATK = 5;
         CurAmmo = 2;
         MagazineSize = 2;
-        TotalAmmo = 20;
-        MaxAmmo = 20;
+        TotalAmmo = 99999;
+        MaxAmmo = 99999;
     }
 
     protected override void OnUpdate()
