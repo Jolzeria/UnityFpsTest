@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class EnemyUnit : BeUnit
 {
+    public int score = 0;
+    
     protected override void Init()
     {
         base.Init();
 
         attribute = new EnemyAttribute();
         attribute.Init();
+        
+        attribute.SetAttrValue(AttributeType.Score, (float)score);
     }
 
     protected override void UnInit()

@@ -65,12 +65,14 @@ public class LevelManager : Singleton<LevelManager>
         {
             lastCreateTime = Time.time;
 
+            var position = new Vector3(0, 0, 13.4899998f);
             var randomNum = Random.Range(1, 4);
-            var moveType = randomNum == 1 ? MoveType.MoveX : randomNum == 2 ? MoveType.MoveZ : MoveType.MoveXHalfRound;
+            var moveType = randomNum == 3 ? MoveType.MoveXHalfRound : MoveType.MoveStraight;
+            var moveDirection = randomNum == 2 ? MoveDirection.forward : MoveDirection.right;
             var speedLevel = level == 1 ? SpeedLevel.Level1 : level == 2 ? SpeedLevel.Level2 : SpeedLevel.Level3;
-            var score = moveType == MoveType.MoveZ ? 1 : moveType == MoveType.MoveX ? 2 : 3;
+            var score = randomNum == 2 ? 1 : randomNum == 1 ? 2 : 3;
 
-            TargetSpawnManager.Instance.Add(moveType, speedLevel, score);
+            TargetSpawnManager.Instance.Add(position, moveType, moveDirection, speedLevel, score);
         }
 
         // 控制难度信息等显示

@@ -1,12 +1,10 @@
 using UnityEngine;
 
-public class MoveX : BaseMove
+public class MoveStraight : BaseMove
 {
     protected override void Init()
     {
         base.Init();
-        
-        moveDir = Vector3.right;
     }
 
     protected override void MyFixedUpdate()

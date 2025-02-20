@@ -13,22 +13,11 @@ public class CharacterUnit : BeUnit
     private Transform machineImageTrans;
     private Transform shotgunImageTrans;
     private Transform sniperImageTrans;
-
-    // 是否已初始化
-    private bool isInit = false;
     
     protected override void Init()
     {
         base.Init();
 
-        StartCoroutine(DelayedExecution());
-    }
-
-    IEnumerator DelayedExecution()
-    {
-        // 等LogicFrame初始化后再调用单例对象
-        yield return new WaitForSeconds(0.1f);
-        
         attribute = new CharacterAttribute();
         attribute.Init();
 
@@ -45,8 +34,6 @@ public class CharacterUnit : BeUnit
         // 默认装备
         EquipWeapon(GunType.Pistol);
         SwitchWeaponImage(GunType.Pistol);
-        
-        isInit = true;
     }
 
     protected override void UnInit()
@@ -58,8 +45,6 @@ public class CharacterUnit : BeUnit
 
     private void Update()
     {
-        if (!isInit) return;
-        
         // 按1-4换枪
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {

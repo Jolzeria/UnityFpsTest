@@ -10,7 +10,6 @@ public class MoveXHalfRound : BaseMove
     {
         base.Init();
 
-        moveDir = Vector3.right;
         startTime = Time.time;
         amplitude = 5f;
         frequency = 3f;

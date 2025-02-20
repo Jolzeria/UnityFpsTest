@@ -1,6 +1,14 @@
 ﻿using System;
 using UnityEngine;
 
+public enum MoveDirection
+{
+    forward,
+    back,
+    right,
+    left
+}
+
 public class BaseMove : MonoBehaviour
 {
     // 限制碰撞间隔
@@ -13,9 +21,9 @@ public class BaseMove : MonoBehaviour
     protected float totalMoveDistance;
     protected Vector3 lastPosition;
     
-    //移动方向
-    protected Vector3 moveDir;
-    
+    // 移动方向
+    public Vector3 moveDir;
+    // 移动速度
     public float speed;
 
     private void Start()

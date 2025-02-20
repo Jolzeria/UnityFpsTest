@@ -5,8 +5,7 @@ using Random = UnityEngine.Random;
 
 public enum MoveType
 {
-    MoveX,
-    MoveZ,
+    MoveStraight,
     MoveXHalfRound
 }
 
@@ -42,12 +41,12 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
         spawnRangeTrans = parent;
     }
 
-    public void Add(MoveType moveType, SpeedLevel speedLevel, int score)
+    public void Add(Vector3 initPosition, MoveType moveType, MoveDirection moveDirection, SpeedLevel speedLevel, int score)
     {
-        if (targetList == null || targetList.Count >= 20)
+        if (targetList == null)
             return;
         
-        var obj = CreateEnemy(moveType, speedLevel, score);
+        var obj = CreateTarget(initPosition, moveType, moveDirection, speedLevel, score);
         targetList?.Add(obj);
     }
     
@@ -79,34 +78,54 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
     /// <param name="speedLevel">移动速度</param>
     /// <param name="score">击杀获得分数</param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public GameObject CreateEnemy(MoveType moveType, SpeedLevel speedLevel, int score)
+    public GameObject CreateTarget(Vector3 initPosition, MoveType moveType, MoveDirection moveDirection, SpeedLevel speedLevel, int score)
     {
         var prefab = Resources.Load<GameObject>("Target");
         var obj = GameObject.Instantiate(prefab);
         obj.SetActive(true);
         
-        // 设置分数
-        obj.GetComponent<BeUnit>().SetAttrValue(AttributeType.Score, (float)score);
-
-        var randomPoint = GetRandomPoint();
-        obj.transform.position = randomPoint;
+        // 设置初始位置
+        obj.transform.position = initPosition;
         obj.transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
+        
+        // 设置分数
+        obj.GetComponent<EnemyUnit>().score = score;
+
+        // var randomPoint = GetRandomPoint();
+        // obj.transform.position = randomPoint;
+        // obj.transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
 
         // 添加移动脚本
         BaseMove script;
         switch (moveType)
         {
-            case MoveType.MoveX:
-                script = obj.AddComponent<MoveX>();
-                break;
-            case MoveType.MoveZ:
-                script = obj.AddComponent<MoveZ>();
+            case MoveType.MoveStraight:
+                script = obj.AddComponent<MoveStraight>();
                 break;
             case MoveType.MoveXHalfRound:
                 script = obj.AddComponent<MoveXHalfRound>();
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(moveType), moveType, null);
+        }
+        
+        // 设置移动方向
+        switch (moveDirection)
+        {
+            case MoveDirection.forward:
+                script.moveDir = Vector3.forward;
+                break;
+            case MoveDirection.back:
+                script.moveDir = Vector3.back;
+                break;
+            case MoveDirection.right:
+                script.moveDir = Vector3.right;
+                break;
+            case MoveDirection.left:
+                script.moveDir = Vector3.left;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(moveDirection), moveDirection, null);
         }
         
         // 设置移动速度
@@ -119,7 +138,7 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
                 script.speed = 12;
                 break;
             case SpeedLevel.Level3:
-                script.speed = 20;
+                script.speed = 25;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(speedLevel), speedLevel, null);
