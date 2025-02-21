@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyUnit : BeUnit
 {
+    public bool enableLifeMode;
     public float lifeTime;
     public int score;
     
@@ -26,6 +27,8 @@ public class EnemyUnit : BeUnit
 
     protected override void OnUpdate()
     {
+        if (!enableLifeMode) return;
+        
         lifeTime -= Time.deltaTime;
         if (lifeTime <= 0)
         {

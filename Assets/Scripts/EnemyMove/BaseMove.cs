@@ -14,17 +14,21 @@ public class BaseMove : MonoBehaviour
     // 限制碰撞间隔
     protected bool canCollision;
     protected float collisionInterval;
-    
+
     // 限制移动距离
     protected bool moveDistanceSwitch;
     protected float maxMoveDistance;
     protected float totalMoveDistance;
     protected Vector3 lastPosition;
-    
+
     // 移动方向
     public Vector3 moveDir;
+
     // 移动速度
     public float speed;
+
+    // 是否启用撞墙销毁
+    public bool enableCollisionMode;
 
     private void Start()
     {
@@ -44,10 +48,10 @@ public class BaseMove : MonoBehaviour
         maxMoveDistance = 10f;
         totalMoveDistance = 0f;
         lastPosition = transform.position;
-        
+
         speed = 10f;
     }
-    
+
     protected virtual void MyFixedUpdate()
     {
         collisionInterval -= Time.fixedDeltaTime;
@@ -65,15 +69,21 @@ public class BaseMove : MonoBehaviour
             ChangeDirection();
         }
     }
-    
+
     protected virtual void OnCollisionEnter(Collision other)
     {
         if (canCollision && other.gameObject.CompareTag("TargetMoveLimit"))
         {
             canCollision = false;
-            
-            // ChangeDirection();
-            TargetSpawnManager.Instance.Release(gameObject);
+
+            if (enableCollisionMode)
+            {
+                TargetSpawnManager.Instance.Release(gameObject);
+            }
+            else
+            {
+                ChangeDirection();
+            }
         }
     }
 

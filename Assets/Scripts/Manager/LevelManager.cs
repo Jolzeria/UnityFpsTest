@@ -115,11 +115,13 @@ public class LevelManager : Singleton<LevelManager>
             if (spawnDatas[i].spawnTime <= gameRunTimer)
             {
                 var data = spawnDatas[i];
+                var enableLifeMode = data.enableLifeMode;
                 var lifeTime = data.lifeTime;
                 var position = data.spawnPosition;
                 var moveType = data.moveType;
                 var moveDirection = data.moveDirection;
                 var speedLevel = data.speedLevel;
+                var enableCollisionMode = data.enableCollisionMode;
                 
                 // 计算分数
                 var score = 0;
@@ -138,7 +140,7 @@ public class LevelManager : Singleton<LevelManager>
                 if (speedLevel == SpeedLevel.Level3)
                     score += 3;
 
-                TargetSpawnManager.Instance.Add(position, moveType, moveDirection, speedLevel, score, lifeTime);
+                TargetSpawnManager.Instance.Add(position, moveType, moveDirection, speedLevel, score, enableLifeMode, lifeTime, enableCollisionMode);
                 spawnDatas.Remove(spawnDatas[i]);
             }
         }
@@ -163,7 +165,13 @@ public class LevelManager : Singleton<LevelManager>
 
     public void LevelUp()
     {
-        if (level >= levelListTrans.childCount || gameStatus != 0) return;
+        if (gameStatus != 0)
+        {
+            ShowCountdownText($"请先重置游戏！");
+            return;
+        }
+        
+        if (level >= levelListTrans.childCount) return;
         level += 1;
 
         ShowCountdownText($"当前难度：{level}");
@@ -171,7 +179,13 @@ public class LevelManager : Singleton<LevelManager>
 
     public void LevelDown()
     {
-        if (level <= 1 || gameStatus != 0) return;
+        if (gameStatus != 0)
+        {
+            ShowCountdownText($"请先重置游戏！");
+            return;
+        }
+        
+        if (level <= 1) return;
         level -= 1;
 
         ShowCountdownText($"当前难度：{level}");

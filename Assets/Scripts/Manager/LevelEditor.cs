@@ -7,8 +7,12 @@ public class SpawnData
 {
     [Tooltip("游戏开始后多少秒生成该靶子")]
     public float spawnTime;
+    [Tooltip("是否启用靶子存活时间")]
+    public bool enableLifeMode;
     [Tooltip("靶子存活的时间")]
     public float lifeTime = 5f;
+    [Tooltip("是否启用撞墙销毁")]
+    public bool enableCollisionMode;
     [Tooltip("靶子生成的位置")]
     public Vector3 spawnPosition;
     [Tooltip("靶子初始移动方向")]
