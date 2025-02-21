@@ -3,36 +3,125 @@ using UnityEngine;
 
 public class GlobalHotkey : MonoBehaviour
 {
+    private Transform twoDCanvas;
+    private Transform pauseCanvas;
+    // 是否暂停
+    private bool isPaused;
+    // 是否显示光标
+    public static bool m_isAlt;
+
+    private void Start()
+    {
+        twoDCanvas = InstanceManager.Instance.Get(InstanceType.TwoDCanvas);
+        pauseCanvas = InstanceManager.Instance.Get(InstanceType.PauseCanvas);
+        isPaused = false;
+    }
+
     private void Update()
     {
         // 开始游戏
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            LevelManager.Instance.StartGame();
+            StartGame();
         }
         
         // 暂停游戏
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            LevelManager.Instance.StopGame();
+            StopGame();
         }
 
         // 降低难度
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            LevelManager.Instance.LevelDown();
+            LevelDown();
         }
 
         // 提升难度
         if (Input.GetKeyDown(KeyCode.F4))
         {
-            LevelManager.Instance.LevelUp();
+            LevelUp();
         }
 
         // 重置游戏
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            LevelManager.Instance.ResetGame();
+            ResetGame();
         }
+        
+        // 暂停打开菜单
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+        
+        // 按了alt键后解除光标的隐藏状态
+        if (!isPaused && (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyDown(KeyCode.RightAlt)))
+        {
+            m_isAlt = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        
+        // 左键点击屏幕恢复隐藏状态
+        if (!isPaused && Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            m_isAlt = false;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
+    public void PauseGame()
+    {
+        twoDCanvas.gameObject.SetActive(false);
+        pauseCanvas.gameObject.SetActive(true);
+        isPaused = true;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0f;
+    }
+
+    public void ResumeGame()
+    {
+        twoDCanvas.gameObject.SetActive(true);
+        pauseCanvas.gameObject.SetActive(false);
+        isPaused = false;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1f;
+    }
+
+    public void StartGame()
+    {
+        LevelManager.Instance.StartGame();
+        ResumeGame();
+    }
+
+    public void StopGame()
+    {
+        LevelManager.Instance.StopGame();
+    }
+
+    public void LevelDown()
+    {
+        LevelManager.Instance.LevelDown();
+    }
+
+    public void LevelUp()
+    {
+        LevelManager.Instance.LevelUp();
+    }
+
+    public void ResetGame()
+    {
+        LevelManager.Instance.ResetGame();
     }
 }
