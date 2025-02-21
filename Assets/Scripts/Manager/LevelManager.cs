@@ -11,11 +11,11 @@ public class LevelManager : Singleton<LevelManager>
     private int gameStatus; // 游戏状态 0：停止 1：开始
     private Transform scoreTranform; // Score文字
 
-    // 显示难度信息相关
-    private Transform levelInfo;
-    private TMP_Text levelInfoText;
-    private bool levelInfoShowStatus;
-    private float levelInfoShowTime;
+    // 显示全局信息相关
+    private Transform topShow;
+    private TMP_Text topShowText;
+    private bool topShowStatus;
+    private float topShowLastTime;
 
     // 游戏结束显示得分相关
     private Transform gameoverInfo;
@@ -45,10 +45,10 @@ public class LevelManager : Singleton<LevelManager>
         gameRunTimer = 0f;
         scoreTranform = InstanceManager.Instance.Get(InstanceType.Score);
 
-        levelInfo = InstanceManager.Instance.Get(InstanceType.LevelInfo);
-        levelInfoText = levelInfo.GetComponent<TMP_Text>();
-        levelInfoShowStatus = false;
-        levelInfoShowTime = 0f;
+        topShow = InstanceManager.Instance.Get(InstanceType.TopShowText);
+        topShowText = topShow.GetComponent<TMP_Text>();
+        topShowStatus = false;
+        topShowLastTime = 0f;
 
         gameoverInfo = InstanceManager.Instance.Get(InstanceType.GameoverInfo);
         gameoverInfoText = gameoverInfo.GetComponent<TMP_Text>();
@@ -67,16 +67,13 @@ public class LevelManager : Singleton<LevelManager>
 
     public void Update()
     {
-        // 控制难度信息等显示
-        if (levelInfoShowStatus)
+        // 控制全局信息显示
+        if (topShowStatus)
         {
-            levelInfoShowTime += Time.deltaTime;
-
-            if (levelInfoShowTime > 3f)
+            if (Time.unscaledTime - topShowLastTime > 3f)
             {
-                levelInfoShowStatus = false;
-                levelInfo.gameObject.SetActive(false);
-                levelInfoShowTime = 0f;
+                topShowStatus = false;
+                topShow.gameObject.SetActive(false);
             }
         }
 
@@ -145,16 +142,6 @@ public class LevelManager : Singleton<LevelManager>
         ShowScoreText();
     }
 
-    public void StopGame()
-    {
-        if (gameStatus != 1) return;
-
-        gameStatus = 2;
-        TargetSpawnManager.Instance.Reset();
-
-        ShowCountdownText($"暂停游戏");
-    }
-
     public void LevelUp()
     {
         if (level >= 3 || gameStatus != 0) return;
@@ -218,9 +205,9 @@ public class LevelManager : Singleton<LevelManager>
     // 显示有时间限制的提示信息
     private void ShowCountdownText(string text)
     {
-        levelInfo.gameObject.SetActive(true);
-        levelInfoShowStatus = true;
-        levelInfoText.text = text;
-        levelInfoShowTime = 0f;
+        topShowLastTime = Time.unscaledTime;
+        topShow.gameObject.SetActive(true);
+        topShowStatus = true;
+        topShowText.text = text;
     }
 }

@@ -13,7 +13,7 @@ public enum InstanceType
     Sight,
     Scope,
     Score,
-    LevelInfo,
+    TopShowText,
     GameoverInfo,
     LevelList,
     Max

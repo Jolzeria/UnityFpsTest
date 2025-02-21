@@ -67,7 +67,7 @@ public class LogicFrame : MonoBehaviour
         InstanceManager.Instance.Add(InstanceType.Sight, transform.Find("2DCanvas/sight"));
         InstanceManager.Instance.Add(InstanceType.Scope, transform.Find("2DCanvas/Scope"));
         InstanceManager.Instance.Add(InstanceType.Score, transform.Find("2DCanvas/Score"));
-        InstanceManager.Instance.Add(InstanceType.LevelInfo, transform.Find("2DCanvas/LevelInfo"));
+        InstanceManager.Instance.Add(InstanceType.TopShowText, transform.Find("GlobalShowCanvas/TopShowText"));
         InstanceManager.Instance.Add(InstanceType.GameoverInfo, transform.Find("2DCanvas/GameoverInfo"));
         InstanceManager.Instance.Add(InstanceType.LevelList, GameObject.Find("LevelList").transform);
     }

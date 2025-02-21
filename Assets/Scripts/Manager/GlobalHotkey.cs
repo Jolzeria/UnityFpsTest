@@ -6,7 +6,7 @@ public class GlobalHotkey : MonoBehaviour
     private Transform twoDCanvas;
     private Transform pauseCanvas;
     // 是否暂停
-    private bool isPaused;
+    public static bool isPaused;
     // 是否显示光标
     public static bool m_isAlt;
 
@@ -15,6 +15,9 @@ public class GlobalHotkey : MonoBehaviour
         twoDCanvas = InstanceManager.Instance.Get(InstanceType.TwoDCanvas);
         pauseCanvas = InstanceManager.Instance.Get(InstanceType.PauseCanvas);
         isPaused = false;
+        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
@@ -23,12 +26,6 @@ public class GlobalHotkey : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F1))
         {
             StartGame();
-        }
-        
-        // 暂停游戏
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            StopGame();
         }
 
         // 降低难度
@@ -71,7 +68,7 @@ public class GlobalHotkey : MonoBehaviour
         }
         
         // 左键点击屏幕恢复隐藏状态
-        if (!isPaused && Input.GetKeyDown(KeyCode.Mouse0))
+        if (!isPaused && m_isAlt && Input.GetKeyDown(KeyCode.Mouse0))
         {
             m_isAlt = false;
             Cursor.visible = false;
@@ -84,9 +81,10 @@ public class GlobalHotkey : MonoBehaviour
         twoDCanvas.gameObject.SetActive(false);
         pauseCanvas.gameObject.SetActive(true);
         isPaused = true;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void ResumeGame()
@@ -94,20 +92,16 @@ public class GlobalHotkey : MonoBehaviour
         twoDCanvas.gameObject.SetActive(true);
         pauseCanvas.gameObject.SetActive(false);
         isPaused = false;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1f;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void StartGame()
     {
         LevelManager.Instance.StartGame();
         ResumeGame();
-    }
-
-    public void StopGame()
-    {
-        LevelManager.Instance.StopGame();
     }
 
     public void LevelDown()
