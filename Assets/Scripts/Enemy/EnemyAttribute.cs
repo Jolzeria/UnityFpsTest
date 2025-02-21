@@ -15,6 +15,8 @@ public class EnemyAttribute : BaseAttribute
                 return 0;
             case AttributeType.Score:
                 return 0;
+            case AttributeType.LifeTime:
+                return 0;
             default:
                 return 0;
         }

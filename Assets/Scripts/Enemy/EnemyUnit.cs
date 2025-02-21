@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnemyUnit : BeUnit
 {
-    public int score = 0;
+    public float lifeTime;
+    public int score;
     
     protected override void Init()
     {
@@ -21,6 +22,15 @@ public class EnemyUnit : BeUnit
         base.UnInit();
 
         attribute.UnInit();
+    }
+
+    protected override void OnUpdate()
+    {
+        lifeTime -= Time.deltaTime;
+        if (lifeTime <= 0)
+        {
+            TargetSpawnManager.Instance.Release(gameObject);
+        }
     }
 
     protected override void RegisterEvent()

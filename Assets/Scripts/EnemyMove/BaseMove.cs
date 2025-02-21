@@ -72,7 +72,8 @@ public class BaseMove : MonoBehaviour
         {
             canCollision = false;
             
-            ChangeDirection();
+            // ChangeDirection();
+            TargetSpawnManager.Instance.Release(gameObject);
         }
     }
 

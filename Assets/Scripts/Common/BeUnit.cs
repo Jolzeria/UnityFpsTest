@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,15 @@ public class BeUnit : MonoBehaviour
     private void OnDestroy()
     {
         //UnInit();
+    }
+
+    private void Update()
+    {
+        OnUpdate();
+    }
+
+    protected virtual void OnUpdate()
+    {
     }
 
     protected virtual void Init()

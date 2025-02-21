@@ -41,12 +41,12 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
         spawnRangeTrans = parent;
     }
 
-    public void Add(Vector3 initPosition, MoveType moveType, MoveDirection moveDirection, SpeedLevel speedLevel, int score)
+    public void Add(Vector3 initPosition, MoveType moveType, MoveDirection moveDirection, SpeedLevel speedLevel, int score, float lifeTime)
     {
         if (targetList == null)
             return;
         
-        var obj = CreateTarget(initPosition, moveType, moveDirection, speedLevel, score);
+        var obj = CreateTarget(initPosition, moveType, moveDirection, speedLevel, score, lifeTime);
         targetList?.Add(obj);
     }
     
@@ -78,7 +78,7 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
     /// <param name="speedLevel">移动速度</param>
     /// <param name="score">击杀获得分数</param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public GameObject CreateTarget(Vector3 initPosition, MoveType moveType, MoveDirection moveDirection, SpeedLevel speedLevel, int score)
+    public GameObject CreateTarget(Vector3 initPosition, MoveType moveType, MoveDirection moveDirection, SpeedLevel speedLevel, int score, float lifeTime)
     {
         var prefab = Resources.Load<GameObject>("Target");
         var obj = GameObject.Instantiate(prefab);
@@ -87,6 +87,9 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
         // 设置初始位置
         obj.transform.position = initPosition;
         obj.transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
+        
+        // 设置靶子存活时间
+        obj.GetComponent<EnemyUnit>().lifeTime = lifeTime;
         
         // 设置分数
         obj.GetComponent<EnemyUnit>().score = score;

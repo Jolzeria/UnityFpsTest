@@ -57,6 +57,8 @@ public class LevelManager : Singleton<LevelManager>
         
         levelListTrans = InstanceManager.Instance.Get(InstanceType.LevelList);
         level1Trans = levelListTrans.Find("Level1");
+        level2Trans = levelListTrans.Find("Level2");
+        level3Trans = levelListTrans.Find("Level3");
         ResetLevelDatas();
     }
 
@@ -81,7 +83,6 @@ public class LevelManager : Singleton<LevelManager>
         if (gameStatus == 1)
         {
             gameRunTimer += Time.deltaTime;
-            CreateTarget();
             var countDown = Mathf.FloorToInt(31f - gameRunTimer);
             remainTime.GetComponent<TMP_Text>().text = countDown.ToString();
 
@@ -89,16 +90,32 @@ public class LevelManager : Singleton<LevelManager>
             {
                 GameOver();
             }
+
+            switch (level)
+            {
+                case 1:
+                    CreateTarget(level1Datas);
+                    break;
+                case 2:
+                    CreateTarget(level2Datas);
+                    break;
+                case 3:
+                    CreateTarget(level3Datas);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    private void CreateTarget()
+    private void CreateTarget(List<SpawnData> spawnDatas)
     {
-        for (int i = level1Datas.Count - 1; i >= 0; i--)
+        for (int i = spawnDatas.Count - 1; i >= 0; i--)
         {
-            if (level1Datas[i].spawnTime <= gameRunTimer)
+            if (spawnDatas[i].spawnTime <= gameRunTimer)
             {
-                var data = level1Datas[i];
+                var data = spawnDatas[i];
+                var lifeTime = data.lifeTime;
                 var position = data.spawnPosition;
                 var moveType = data.moveType;
                 var moveDirection = data.moveDirection;
@@ -121,8 +138,8 @@ public class LevelManager : Singleton<LevelManager>
                 if (speedLevel == SpeedLevel.Level3)
                     score += 3;
 
-                TargetSpawnManager.Instance.Add(position, moveType, moveDirection, speedLevel, score);
-                level1Datas.Remove(level1Datas[i]);
+                TargetSpawnManager.Instance.Add(position, moveType, moveDirection, speedLevel, score, lifeTime);
+                spawnDatas.Remove(spawnDatas[i]);
             }
         }
     }
@@ -130,6 +147,8 @@ public class LevelManager : Singleton<LevelManager>
     private void ResetLevelDatas()
     {
         level1Datas = level1Trans.GetComponent<LevelEditor>().GetSpawnDatas();
+        level2Datas = level2Trans.GetComponent<LevelEditor>().GetSpawnDatas();
+        level3Datas = level3Trans.GetComponent<LevelEditor>().GetSpawnDatas();
     }
 
     public void StartGame()
@@ -144,7 +163,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void LevelUp()
     {
-        if (level >= 3 || gameStatus != 0) return;
+        if (level >= levelListTrans.childCount || gameStatus != 0) return;
         level += 1;
 
         ShowCountdownText($"当前难度：{level}");

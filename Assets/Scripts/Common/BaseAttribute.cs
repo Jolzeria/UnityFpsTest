@@ -15,6 +15,7 @@ public enum AttributeType
     ATK,
     DEF,
     Score,
+    LifeTime,
     Max
 }
 
