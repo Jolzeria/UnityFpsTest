@@ -9,6 +9,7 @@ public enum InstanceType
 {
     None,
     TwoDCanvas,
+    PauseCanvas,
     Sight,
     Scope,
     Score,

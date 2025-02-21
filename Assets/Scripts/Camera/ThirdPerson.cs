@@ -10,7 +10,6 @@ public class ThirdPerson : MonoBehaviour
     private Quaternion charaRotation;
     private float m_Pitch;
     private float m_Yaw;
-    private bool m_isAlt;
     
     private static bool m_isScope;
 
@@ -27,32 +26,11 @@ public class ThirdPerson : MonoBehaviour
         m_Pitch = transform.rotation.x;
         m_Yaw = transform.rotation.y;
 
-        m_isAlt = false;
         m_isScope = false;
     }
 
     private void Update()
     {
-        // 隐藏鼠标光标
-        if (!m_isAlt)
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        
-        // 按了alt键后解除光标的隐藏状态
-        if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyDown(KeyCode.RightAlt))
-        {
-            m_isAlt = true;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-        
-        // 左键点击屏幕恢复隐藏状态
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            m_isAlt = false;
-        }
     }
 
     private void FixedUpdate()
@@ -80,15 +58,7 @@ public class ThirdPerson : MonoBehaviour
 
     private void Rotate(float horizontal, float vertical)
     {
-        /*if (Input.GetMouseButton(1))
-        {
-            //transform.rotation = Quaternion.Euler(oriRotation.x, oriRotation.y + mouseX, oriRotation.z);
-            m_Yaw += horizontal;
-            // pitch向下时值增大，相反
-            m_Pitch -= vertical;
-            m_Pitch = Mathf.Clamp(m_Pitch, -70, 70);
-        }*/
-        if (!m_isAlt)
+        if (!GlobalHotkey.m_isAlt)
         {
             //transform.rotation = Quaternion.Euler(oriRotation.x, oriRotation.y + mouseX, oriRotation.z);
             m_Yaw += horizontal;

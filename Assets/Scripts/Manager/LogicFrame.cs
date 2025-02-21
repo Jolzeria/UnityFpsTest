@@ -63,6 +63,7 @@ public class LogicFrame : MonoBehaviour
     private void FindInstance()
     {
         InstanceManager.Instance.Add(InstanceType.TwoDCanvas, transform.Find("2DCanvas"));
+        InstanceManager.Instance.Add(InstanceType.PauseCanvas, transform.Find("PauseCanvas"));
         InstanceManager.Instance.Add(InstanceType.Sight, transform.Find("2DCanvas/sight"));
         InstanceManager.Instance.Add(InstanceType.Scope, transform.Find("2DCanvas/Scope"));
         InstanceManager.Instance.Add(InstanceType.Score, transform.Find("2DCanvas/Score"));
