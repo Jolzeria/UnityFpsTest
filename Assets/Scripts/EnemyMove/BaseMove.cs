@@ -52,7 +52,7 @@ public class BaseMove : MonoBehaviour
         totalMoveDistance = 0f;
         lastPosition = transform.position;
         
-        collisionCount = 0;
+        collisionCount = 1;
     }
 
     protected virtual void MyFixedUpdate()
