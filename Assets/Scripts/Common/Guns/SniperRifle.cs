@@ -8,12 +8,13 @@ public class SniperRifle : BaseGun
     public float speed = 500f;
     public float gravity = 0f;
     public bool followRotate = false;
-    public float shootInterval = 2f;
     public float duration = 15f;
 
     protected override void Init()
     {
         base.Init();
+
+        shootInterval = 1f;
 
         ATK = 30;
         CurAmmo = 7;
@@ -25,7 +26,7 @@ public class SniperRifle : BaseGun
     protected override void OnUpdate()
     {
         base.OnUpdate();
-        
+
         // 开镜
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -37,19 +38,12 @@ public class SniperRifle : BaseGun
         {
             ThirdPerson.CloseScope();
         }
-        
+
         // 发射子弹
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (shootTimer <= 0)
-            {
-                Shoot();
-                shootTimer = shootInterval;
-            }
+            Shoot();
         }
-
-        if (shootTimer >= 0)
-            shootTimer -= Time.deltaTime;
     }
 
     protected override void ShootBullet()
@@ -59,7 +53,8 @@ public class SniperRifle : BaseGun
         var mainCameraTrans = Camera.main.transform;
         float realDuration;
         Vector3 direction;
-        if (Physics.Raycast(mainCameraTrans.position, mainCameraTrans.forward, out var hitInfo, speed * duration, LayerManager.Environment | LayerManager.Enemy))
+        if (Physics.Raycast(mainCameraTrans.position, mainCameraTrans.forward, out var hitInfo, speed * duration,
+            LayerManager.Environment | LayerManager.Enemy))
         {
             direction = hitInfo.point - muzzle.transform.position;
             realDuration = duration;
@@ -70,10 +65,11 @@ public class SniperRifle : BaseGun
             direction = endPoint - muzzle.transform.position;
             realDuration = duration * (direction.magnitude / (speed * duration));
         }
-        
+
         // 子弹射击方向增加偏差值
         var radius = 0.15f;
-        var offset = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), Random.Range(-radius, radius));
+        var offset = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius),
+            Random.Range(-radius, radius));
         direction += offset;
 
         var bullet = CreateBullet();

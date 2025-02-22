@@ -71,5 +71,6 @@ public class LogicFrame : MonoBehaviour
         InstanceManager.Instance.Add(InstanceType.GameoverInfo, transform.Find("2DCanvas/GameoverInfo"));
         InstanceManager.Instance.Add(InstanceType.LevelList, GameObject.Find("LevelList").transform);
         InstanceManager.Instance.Add(InstanceType.LevelObstacle, GameObject.Find("LevelObstacle").transform);
+        InstanceManager.Instance.Add(InstanceType.ReloadBulletText, transform.Find("GlobalShowCanvas/ReloadBulletText"));
     }
 }

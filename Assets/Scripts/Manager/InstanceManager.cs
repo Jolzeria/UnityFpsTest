@@ -17,6 +17,7 @@ public enum InstanceType
     GameoverInfo,
     LevelList,
     LevelObstacle,
+    ReloadBulletText,
     Max
 }
 

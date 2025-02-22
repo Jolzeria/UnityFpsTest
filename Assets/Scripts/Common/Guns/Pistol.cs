@@ -8,12 +8,13 @@ public class Pistol : BaseGun
     public float speed = 200f;
     public float gravity = 0f;
     public bool followRotate = false;
-    public float shootInterval = 0.2f;
     public float duration = 5f;
 
     protected override void Init()
     {
         base.Init();
+        
+        shootInterval = 0.2f;
 
         ATK = 15;
         CurAmmo = 7;
@@ -25,19 +26,12 @@ public class Pistol : BaseGun
     protected override void OnUpdate()
     {
         base.OnUpdate();
-        
+
         // 发射子弹
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            if (shootTimer <= 0)
-            {
-                Shoot();
-                shootTimer = shootInterval;
-            }
+            Shoot();
         }
-
-        if (shootTimer >= 0)
-            shootTimer -= Time.deltaTime;
     }
 
     protected override void ShootBullet()
@@ -47,7 +41,8 @@ public class Pistol : BaseGun
         var mainCameraTrans = Camera.main.transform;
         float realDuration;
         Vector3 direction;
-        if (Physics.Raycast(mainCameraTrans.position, mainCameraTrans.forward, out var hitInfo, speed * duration, LayerManager.Environment | LayerManager.Enemy))
+        if (Physics.Raycast(mainCameraTrans.position, mainCameraTrans.forward, out var hitInfo, speed * duration,
+            LayerManager.Environment | LayerManager.Enemy))
         {
             direction = hitInfo.point - muzzle.transform.position;
             realDuration = duration;
@@ -58,10 +53,11 @@ public class Pistol : BaseGun
             direction = endPoint - muzzle.transform.position;
             realDuration = duration * (direction.magnitude / (speed * duration));
         }
-        
+
         // 子弹射击方向增加偏差值
         var radius = 0.15f;
-        var offset = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), Random.Range(-radius, radius));
+        var offset = new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius),
+            Random.Range(-radius, radius));
         direction += offset;
 
         var bullet = CreateBullet();

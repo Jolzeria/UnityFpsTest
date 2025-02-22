@@ -8,7 +8,6 @@ public class Shotgun : BaseGun
     public float speed = 200f;
     public float gravity = 0f;
     public bool followRotate = false;
-    public float shootInterval = 1f;
     public float duration = 5f;
 
     public int bulletCount = 20;
@@ -20,6 +19,8 @@ public class Shotgun : BaseGun
     protected override void Init()
     {
         base.Init();
+        
+        shootInterval = 1f;
 
         ATK = 5;
         CurAmmo = 2;
@@ -35,21 +36,14 @@ public class Shotgun : BaseGun
         // 发射子弹
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            if (shootTimer <= 0)
-            {
-                Shoot();
-                shootTimer = shootInterval;
-            }
+            Shoot();
         }
-
-        if (shootTimer >= 0)
-            shootTimer -= Time.deltaTime;
     }
 
     protected override void ShootBullet()
     {
         base.ShootBullet();
-        
+
         var mainCameraTrans = Camera.main.transform;
         float realDuration;
         Vector3 direction;
@@ -232,7 +226,8 @@ public class Shotgun : BaseGun
                 // 将偏移坐标转向摄像机正面方向
                 offset = Quaternion.LookRotation(m_Camera.transform.forward) * offset;
                 // 计算最后子弹终点的坐标
-                var finalPosition = m_Camera.transform.position + m_Camera.transform.forward * bulletMaxDistance + offset;
+                var finalPosition = m_Camera.transform.position + m_Camera.transform.forward * bulletMaxDistance +
+                                    offset;
 
                 result.Add(finalPosition);
             }
