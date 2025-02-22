@@ -23,10 +23,10 @@ public class LevelManager : Singleton<LevelManager>
 
     // 游戏总时长
     private float gameRunTimer;
-    
+
     // 显示游戏剩余时间
     private Transform remainTime;
-    
+
     // 所有的关卡信息
     private Transform levelListTrans;
     private Transform level1Trans;
@@ -52,9 +52,9 @@ public class LevelManager : Singleton<LevelManager>
 
         gameoverInfo = InstanceManager.Instance.Get(InstanceType.GameoverInfo);
         gameoverInfoText = gameoverInfo.GetComponent<TMP_Text>();
-        
+
         remainTime = InstanceManager.Instance.Get(InstanceType.TwoDCanvas).Find("RemainTime");
-        
+
         levelListTrans = InstanceManager.Instance.Get(InstanceType.LevelList);
         level1Trans = levelListTrans.Find("Level1");
         level2Trans = levelListTrans.Find("Level2");
@@ -122,7 +122,8 @@ public class LevelManager : Singleton<LevelManager>
                 var moveDirection = data.moveDirection;
                 var speedLevel = data.speedLevel;
                 var enableCollisionMode = data.enableCollisionMode;
-                
+                var collisionLimit = data.collisionLimit;
+
                 // 计算分数
                 var score = 0;
                 if (moveType == MoveType.MoveStraight)
@@ -140,7 +141,8 @@ public class LevelManager : Singleton<LevelManager>
                 if (speedLevel == SpeedLevel.Level3)
                     score += 3;
 
-                TargetSpawnManager.Instance.Add(position, moveType, moveDirection, speedLevel, score, enableLifeMode, lifeTime, enableCollisionMode);
+                TargetSpawnManager.Instance.Add(position, moveType, moveDirection, speedLevel, score, enableLifeMode,
+                    lifeTime, enableCollisionMode, collisionLimit);
                 spawnDatas.Remove(spawnDatas[i]);
             }
         }
@@ -170,7 +172,7 @@ public class LevelManager : Singleton<LevelManager>
             ShowCountdownText($"请先重置游戏！");
             return;
         }
-        
+
         if (level >= levelListTrans.childCount) return;
         level += 1;
 
@@ -184,7 +186,7 @@ public class LevelManager : Singleton<LevelManager>
             ShowCountdownText($"请先重置游戏！");
             return;
         }
-        
+
         if (level <= 1) return;
         level -= 1;
 
@@ -198,7 +200,7 @@ public class LevelManager : Singleton<LevelManager>
         TargetSpawnManager.Instance.Reset();
         ShowCountdownText($"重置游戏");
         ShowInitText();
-        
+
         gameRunTimer = 0f;
     }
 

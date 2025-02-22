@@ -31,7 +31,7 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
     public override void UnInit()
     {
         base.UnInit();
-        
+
         targetList.Clear();
         targetList = null;
     }
@@ -41,20 +41,22 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
         spawnRangeTrans = parent;
     }
 
-    public void Add(Vector3 initPosition, MoveType moveType, MoveDirection moveDirection, SpeedLevel speedLevel, int score, bool enableLifeMode, float lifeTime, bool enableCollisionMode)
+    public void Add(Vector3 initPosition, MoveType moveType, MoveDirection moveDirection, SpeedLevel speedLevel,
+        int score, bool enableLifeMode, float lifeTime, bool enableCollisionMode, int collisionLimit)
     {
         if (targetList == null)
             return;
-        
-        var obj = CreateTarget(initPosition, moveType, moveDirection, speedLevel, score, enableLifeMode, lifeTime, enableCollisionMode);
+
+        var obj = CreateTarget(initPosition, moveType, moveDirection, speedLevel, score, enableLifeMode, lifeTime,
+            enableCollisionMode, collisionLimit);
         targetList?.Add(obj);
     }
-    
+
     public void Release(GameObject obj)
     {
         if (targetList == null)
             return;
-        
+
         GameObject.Destroy(obj);
         targetList?.Remove(obj);
     }
@@ -68,6 +70,7 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
         {
             GameObject.Destroy(obj);
         }
+
         targetList.Clear();
     }
 
@@ -82,22 +85,25 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
     /// <param name="enableLifeMode">是否启用靶子存活时间</param>
     /// <param name="lifeTime">靶子存活时间</param>
     /// <param name="enableCollisionMode">是否启用撞墙销毁</param>
+    /// <param name="collisionLimit">撞几次墙销毁</param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public GameObject CreateTarget(Vector3 initPosition, MoveType moveType, MoveDirection moveDirection, SpeedLevel speedLevel, int score, bool enableLifeMode, float lifeTime, bool enableCollisionMode)
+    public GameObject CreateTarget(Vector3 initPosition, MoveType moveType, MoveDirection moveDirection,
+        SpeedLevel speedLevel, int score, bool enableLifeMode, float lifeTime, bool enableCollisionMode,
+        int collisionLimit)
     {
         var prefab = Resources.Load<GameObject>("Target");
         var obj = GameObject.Instantiate(prefab);
         obj.SetActive(true);
         var targetUnit = obj.GetComponent<EnemyUnit>();
-        
+
         // 设置初始位置
         obj.transform.position = initPosition;
         obj.transform.rotation = Quaternion.LookRotation(Vector3.back, Vector3.up);
-        
+
         // 设置靶子存活时间
         targetUnit.enableLifeMode = enableLifeMode;
         targetUnit.lifeTime = lifeTime;
-        
+
         // 设置分数
         targetUnit.score = score;
 
@@ -120,7 +126,8 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
         }
 
         script.enableCollisionMode = enableCollisionMode;
-        
+        script.collisionLimit = collisionLimit;
+
         // 设置移动方向
         switch (moveDirection)
         {
@@ -139,7 +146,7 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
             default:
                 throw new ArgumentOutOfRangeException(nameof(moveDirection), moveDirection, null);
         }
-        
+
         // 设置移动速度
         switch (speedLevel)
         {

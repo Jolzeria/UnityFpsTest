@@ -13,6 +13,8 @@ public class SpawnData
     public float lifeTime = 5f;
     [Tooltip("是否启用撞墙销毁")]
     public bool enableCollisionMode;
+    [Tooltip("撞几次墙销毁")]
+    public int collisionLimit = 1;
     [Tooltip("靶子生成的位置")]
     public Vector3 spawnPosition;
     [Tooltip("靶子初始移动方向")]

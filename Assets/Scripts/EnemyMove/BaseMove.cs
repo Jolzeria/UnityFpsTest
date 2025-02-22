@@ -29,6 +29,9 @@ public class BaseMove : MonoBehaviour
 
     // 是否启用撞墙销毁
     public bool enableCollisionMode;
+    // 撞几次墙销毁
+    public int collisionLimit;
+    private int collisionCount;
 
     private void Start()
     {
@@ -50,6 +53,8 @@ public class BaseMove : MonoBehaviour
         lastPosition = transform.position;
 
         speed = 10f;
+        
+        collisionCount = 0;
     }
 
     protected virtual void MyFixedUpdate()
@@ -72,18 +77,17 @@ public class BaseMove : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision other)
     {
+        if (enableCollisionMode && collisionCount >= collisionLimit)
+        {
+            TargetSpawnManager.Instance.Release(gameObject);
+            return;
+        }
+        
         if (canCollision && other.gameObject.CompareTag("TargetMoveLimit"))
         {
             canCollision = false;
-
-            if (enableCollisionMode)
-            {
-                TargetSpawnManager.Instance.Release(gameObject);
-            }
-            else
-            {
-                ChangeDirection();
-            }
+            ChangeDirection();
+            collisionCount += 1;
         }
     }
 
