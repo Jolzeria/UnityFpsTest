@@ -175,6 +175,8 @@ public class LevelManager : Singleton<LevelManager>
         gameStatus = 1;
 
         ShowCountdownText($"游戏开始");
+        ScoreManager.Instance.ResetScore();
+        TargetSpawnManager.Instance.Reset();
         ShowScoreText();
     }
 

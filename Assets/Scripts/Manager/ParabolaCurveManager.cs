@@ -141,9 +141,19 @@ public class ParabolaCurveManager : Singleton<ParabolaCurveManager>
         }
 
         // 碰撞事件
-        if (IsBounding(curData, nextData, out var hitInfo))
+        if (IsBounding(curData, nextData, out var hitInfos))
         {
-            var layer = hitInfo.collider.gameObject.layer;
+            RaycastHit hitInfo = hitInfos[0];
+            int layer = hitInfo.collider.gameObject.layer;
+
+            // 找到第一个能碰撞的物体
+            foreach (var hitinfo in hitInfos)
+            {
+                layer = hitinfo.collider.gameObject.layer;
+                hitInfo = hitinfo;
+                if (layer != Layer.Player && layer != Layer.Boundary)
+                    break;
+            }
 
             if (layer == Layer.Player || layer == Layer.Boundary)
             {
@@ -205,11 +215,13 @@ public class ParabolaCurveManager : Singleton<ParabolaCurveManager>
             RoundBulletPool.Instance.Release(bullet);
     }
 
-    private bool IsBounding(ParabolaCurveUpdateData curData, ParabolaCurveUpdateData nextData, out RaycastHit hitInfo)
+    private bool IsBounding(ParabolaCurveUpdateData curData, ParabolaCurveUpdateData nextData, out RaycastHit[] hitInfos)
     {
         // 计算出射线方向
         var rayDirection = nextData.point - curData.point;
 
-        return Physics.Raycast(curData.point, rayDirection, out hitInfo, rayDirection.magnitude);
+        hitInfos = Physics.RaycastAll(curData.point, rayDirection, rayDirection.magnitude);
+
+        return Physics.Raycast(curData.point, rayDirection, rayDirection.magnitude);
     }
 }
