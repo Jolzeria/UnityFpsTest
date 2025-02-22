@@ -151,13 +151,13 @@ public class TargetSpawnManager : Singleton<TargetSpawnManager>
         switch (speedLevel)
         {
             case SpeedLevel.Level1:
-                script.speed = 5;
+                script.speed = 6;
                 break;
             case SpeedLevel.Level2:
-                script.speed = 12;
+                script.speed = 10;
                 break;
             case SpeedLevel.Level3:
-                script.speed = 25;
+                script.speed = 14;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(speedLevel), speedLevel, null);

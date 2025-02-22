@@ -200,6 +200,7 @@ public class LevelManager : Singleton<LevelManager>
         TargetSpawnManager.Instance.Reset();
         ShowCountdownText($"重置游戏");
         ShowInitText();
+        ResetLevelDatas();
 
         gameRunTimer = 0f;
     }

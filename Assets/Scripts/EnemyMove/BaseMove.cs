@@ -51,8 +51,6 @@ public class BaseMove : MonoBehaviour
         maxMoveDistance = 10f;
         totalMoveDistance = 0f;
         lastPosition = transform.position;
-
-        speed = 10f;
         
         collisionCount = 0;
     }
