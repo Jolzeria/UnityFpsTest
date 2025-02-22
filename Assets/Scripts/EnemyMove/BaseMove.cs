@@ -75,14 +75,15 @@ public class BaseMove : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision other)
     {
-        if (enableCollisionMode && collisionCount >= collisionLimit)
-        {
-            TargetSpawnManager.Instance.Release(gameObject);
-            return;
-        }
         
         if (canCollision && other.gameObject.CompareTag("TargetMoveLimit"))
         {
+            if (enableCollisionMode && collisionCount >= collisionLimit)
+            {
+                TargetSpawnManager.Instance.Release(gameObject);
+                return;
+            }
+            
             canCollision = false;
             ChangeDirection();
             collisionCount += 1;

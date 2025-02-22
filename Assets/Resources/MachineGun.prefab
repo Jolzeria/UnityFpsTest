@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5866c50444504d388e49fd23d4b5f5fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  speed: 200
   gravity: 0
   followRotate: 1
   shootInterval: 0.05

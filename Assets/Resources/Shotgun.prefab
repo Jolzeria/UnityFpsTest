@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd0ff9f60d0423682e4dca6356e2104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  speed: 200
   gravity: 0
   followRotate: 0
-  shootInterval: 0.5
+  shootInterval: 1
   duration: 5
   bulletCount: 20
   sectorCount: 4

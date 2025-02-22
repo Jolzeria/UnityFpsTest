@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b0914feda6c7145be4ec663cf44ee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  speed: 200
   gravity: 0
   followRotate: 1
-  shootInterval: 0.5
+  shootInterval: 0.2
   duration: 5
 --- !u!1 &5357896281471511438
 GameObject:

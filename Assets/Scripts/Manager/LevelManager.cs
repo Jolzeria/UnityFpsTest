@@ -92,12 +92,13 @@ public class LevelManager : Singleton<LevelManager>
         if (gameStatus == 1)
         {
             gameRunTimer += Time.deltaTime;
-            var countDown = Mathf.FloorToInt(31f - gameRunTimer);
+            var countDown = Mathf.FloorToInt(21f - gameRunTimer);
             remainTime.GetComponent<TMP_Text>().text = countDown.ToString();
 
-            if (gameRunTimer >= 30f)
+            if (gameRunTimer >= 20f)
             {
                 GameOver();
+                return;
             }
 
             switch (level)
@@ -226,6 +227,7 @@ public class LevelManager : Singleton<LevelManager>
         gameStatus = 0;
         ScoreManager.Instance.ResetScore();
         TargetSpawnManager.Instance.Reset();
+        ResetLevelDatas();
 
         gameRunTimer = 0f;
     }

@@ -159,9 +159,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b52ae4cd68f47dc8a9b68af284d2fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  speed: 500
   gravity: 0
   followRotate: 1
+  shootInterval: 2
   duration: 5
 --- !u!1 &8290125071062515408
 GameObject:

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SniperRifle : BaseGun
 {
-    public float speed = 300f;
+    public float speed = 500f;
     public float gravity = 0f;
     public bool followRotate = false;
     public float shootInterval = 2f;

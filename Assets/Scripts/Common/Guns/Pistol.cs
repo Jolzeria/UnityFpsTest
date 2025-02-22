@@ -8,14 +8,14 @@ public class Pistol : BaseGun
     public float speed = 200f;
     public float gravity = 0f;
     public bool followRotate = false;
-    public float shootInterval = 0.5f;
+    public float shootInterval = 0.2f;
     public float duration = 5f;
 
     protected override void Init()
     {
         base.Init();
 
-        ATK = 10;
+        ATK = 15;
         CurAmmo = 7;
         MagazineSize = 7;
         TotalAmmo = 99999;
