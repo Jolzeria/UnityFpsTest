@@ -26,7 +26,7 @@ public class LevelEditorEditor : Editor
 
         if (tempGameObject != null)
         {
-            AddSpawnPosition(tempGameObject.transform.position);
+            AddSpawnPosition(tempGameObject.transform);
             tempGameObject = null; // 清空，以便继续拖入新的
         }
         
@@ -49,12 +49,13 @@ public class LevelEditorEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 
-    private void AddSpawnPosition(Vector3 position)
+    private void AddSpawnPosition(Transform targetTransform)
     {
         spawnDatasProp.arraySize++; // 增加数组大小
         SerializedProperty newElement = spawnDatasProp.GetArrayElementAtIndex(spawnDatasProp.arraySize - 1);
         newElement.FindPropertyRelative("spawnTime").floatValue = 0f;
-        newElement.FindPropertyRelative("spawnPosition").vector3Value = position;
+        newElement.FindPropertyRelative("spawnPosition").vector3Value = targetTransform.position;
+        newElement.FindPropertyRelative("target").objectReferenceValue = targetTransform;
 
         serializedObject.ApplyModifiedProperties();
     }

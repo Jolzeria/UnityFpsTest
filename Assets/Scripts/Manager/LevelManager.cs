@@ -35,6 +35,10 @@ public class LevelManager : Singleton<LevelManager>
     private List<SpawnData> level2Datas;
     private Transform level3Trans;
     private List<SpawnData> level3Datas;
+    private Transform levelObstacleTrans;
+    private Transform level1Obstacle;
+    private Transform level2Obstacle;
+    private Transform level3Obstacle;
 
     public override void Init()
     {
@@ -60,6 +64,11 @@ public class LevelManager : Singleton<LevelManager>
         level2Trans = levelListTrans.Find("Level2");
         level3Trans = levelListTrans.Find("Level3");
         ResetLevelDatas();
+        levelObstacleTrans = InstanceManager.Instance.Get(InstanceType.LevelObstacle);
+        level1Obstacle = levelObstacleTrans.Find("Level1");
+        level2Obstacle = levelObstacleTrans.Find("Level2");
+        level3Obstacle = levelObstacleTrans.Find("Level3");
+        HideAllObstacle();
     }
 
     public override void UnInit()
@@ -95,12 +104,15 @@ public class LevelManager : Singleton<LevelManager>
             {
                 case 1:
                     CreateTarget(level1Datas);
+                    SwitchLevelObstacle();
                     break;
                 case 2:
                     CreateTarget(level2Datas);
+                    SwitchLevelObstacle();
                     break;
                 case 3:
                     CreateTarget(level3Datas);
+                    SwitchLevelObstacle();
                     break;
                 default:
                     break;
@@ -201,6 +213,7 @@ public class LevelManager : Singleton<LevelManager>
         ShowCountdownText($"重置游戏");
         ShowInitText();
         ResetLevelDatas();
+        HideAllObstacle();
 
         gameRunTimer = 0f;
     }
@@ -245,5 +258,40 @@ public class LevelManager : Singleton<LevelManager>
         topShow.gameObject.SetActive(true);
         topShowStatus = true;
         topShowText.text = text;
+    }
+
+    // 切换关卡障碍物
+    private void SwitchLevelObstacle()
+    {
+        if (level == 1 && level1Obstacle.gameObject.activeSelf)
+            return;
+        if (level == 2 && level2Obstacle.gameObject.activeSelf)
+            return;
+        if (level == 3 && level3Obstacle.gameObject.activeSelf)
+            return;
+        
+        HideAllObstacle();
+        switch (level)
+        {
+            case 1:
+                level1Obstacle.gameObject.SetActive(true);
+                break;
+            case 2:
+                level2Obstacle.gameObject.SetActive(true);
+                break;
+            case 3:
+                level3Obstacle.gameObject.SetActive(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+    // 隐藏全部关卡障碍物
+    private void HideAllObstacle()
+    {
+        level1Obstacle.gameObject.SetActive(false);
+        level2Obstacle.gameObject.SetActive(false);
+        level3Obstacle.gameObject.SetActive(false);
     }
 }

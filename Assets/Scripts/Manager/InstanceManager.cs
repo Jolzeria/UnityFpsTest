@@ -16,6 +16,7 @@ public enum InstanceType
     TopShowText,
     GameoverInfo,
     LevelList,
+    LevelObstacle,
     Max
 }
 
